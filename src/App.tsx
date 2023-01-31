@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Update from './pages/Update';
 import GlobalStyle from './styles/globalStyles';
 import theme from "./styles/theme"
 
@@ -15,6 +16,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Home/>}/>
             <Route path='/login' element={<Login/>}/>
+            <Route path='/update' element={<Update/>}/>
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
