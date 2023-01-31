@@ -7,4 +7,11 @@ export const ButtonStyled = styled.button`
   padding:0.3rem 0;
   cursor: pointer;
   outline: none;
+
+  &:hover {
+    background-color: ${({theme}) => theme.colors.secundaryBlack};
+  }
 `;
+
+
+
