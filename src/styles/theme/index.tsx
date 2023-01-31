@@ -1,5 +1,5 @@
 const theme = {
-    border:"0.625rem",
+    border:"1rem",
     colors:{
         firstBlack:"#282828",
         secundaryBlack:"#3C3A3A",

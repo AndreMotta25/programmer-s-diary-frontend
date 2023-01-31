@@ -60,6 +60,9 @@ const GlobalStyle = createGlobalStyle`
         font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
     }
+    html {
+        font-size: 62.5%; // 10px
+    }
 
 `;
 export default GlobalStyle;

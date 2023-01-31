@@ -4,7 +4,7 @@ export const ButtonStyled = styled.button`
   background-color: ${({theme}) => theme.colors.background};
   border-radius: ${({theme}) => theme.border};
   border: none;
-  padding:0.188rem 0;
+  padding:0.3rem 0;
   cursor: pointer;
   outline: none;
 `;

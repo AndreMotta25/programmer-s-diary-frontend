@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import * as Animation from "./animations"
 
 export const Container = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 5.0rem;
+  height:  5.0rem;
   position: relative;
   border-radius: 50%;
   animation: ${Animation.Run} 2s linear infinite ;

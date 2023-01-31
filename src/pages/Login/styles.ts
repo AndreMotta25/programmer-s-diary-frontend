@@ -14,7 +14,7 @@ export const ContainerBackground = styled.div`
   justify-content: center;
   /* Esse padding não vai deixar o container filho chegar no topo da pagina, assim o 
   empurrando para baixo */
-  padding: 1.875rem 0;
+  padding: 3rem 0;
 `;
 
 export const ContainerLogin = styled.div`
@@ -23,7 +23,7 @@ export const ContainerLogin = styled.div`
     background: linear-gradient(to right, #e981d9, #6d22c4);
     margin: 0 auto;
     border-radius: ${({theme}) => theme.border};
-    padding: 2.188rem 0;
+    padding: 3.5rem 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -44,8 +44,8 @@ export const ContainerElementos = styled.div`
   flex-direction: column;
 `
 export const Header = styled.header`
-  margin-bottom: 1.438rem;
-  gap: 1.25rem;
+  margin-bottom: 2.3rem;
+  gap: 2rem;
   display: flex;
   flex-direction: column;
 `;
@@ -58,7 +58,7 @@ export const Img = styled.img`
 
 export const Title = styled.h1`
   font-family: 'Source Code Pro', monospace;
-  font-size: 1.25rem;
+  font-size: 2rem;
   font-weight: 600;
   color: #fff;
   text-align: center;
@@ -77,10 +77,10 @@ export const Form = styled.form`
 `;
 
 export const Button = styled(ButtonStyled)`
-  padding: 0.75rem 0;
+  padding: 1.2rem 0;
   color: #fff;
   width: 100%;
-  margin-bottom: 0.563rem;
+  margin-bottom: 0.9rem;
 `; 
 
 export const AuthenticationError = styled.p`
@@ -90,7 +90,7 @@ export const AuthenticationError = styled.p`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.60rem;
+  padding: 0.96rem;
   color: red;
   font-weight:bold;
   /* width: 90%; */
@@ -101,4 +101,5 @@ export const AuthenticationError = styled.p`
 export const Cadastrar = styled.div`
     width: 100%;
     text-align: center;
+    font-size: 1.6rem;
 `; 
