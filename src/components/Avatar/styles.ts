@@ -34,7 +34,7 @@ export const ContainerAvatar = styled.div`
    css`
     & {
         position: absolute;
-        border-radius: 10px;
+        border-radius: 1rem;
         background-color: #282828;
         transition: all 0.5s;
 
@@ -62,8 +62,8 @@ export const ContainerAvatar = styled.div`
 
 export const ContainerPhoto = styled.div`  
   border-radius: 50%;
-  width: 76px;
-  height: 76px;
+  width: 7.6rem;
+  height: 7.6rem;
   position: relative;
   z-index: 99999;
   cursor: pointer;
@@ -73,13 +73,13 @@ export const ContainerPhoto = styled.div`
     width: 100%;
     display: block;
     border-radius: 50%;
-    border: 2px solid #fff; 
+    border: 0.2rem solid #fff; 
   }
 
   &:hover::before {
         content:'';
-        width: 76px;
-        height: 76px;
+        width: 7.6rem;
+        height: 7.6rem;
         display: block;
         background-color: rgba(0,0,0,40%);
         position: absolute;
@@ -97,8 +97,8 @@ export const ActionsList = styled.ul`
     border-radius: 10px;
     padding: 0.5rem;
     transform: translateY(5px);
-    gap: 10px;
-    top: -8px;
+    gap: 1rem;
+    top: -0.8rem;
 `
 export const ActionItem = styled.li`
     color: #fff;
@@ -110,6 +110,6 @@ export const ActionItem = styled.li`
 
     &:hover {
         background-color: ${({theme}) => theme.colors.secundaryBlack};
-        border-radius: 10px;
+        border-radius: 1rem;
     }
 `

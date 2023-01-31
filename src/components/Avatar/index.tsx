@@ -8,6 +8,9 @@ interface IProps {
 }
 const Profile = ({active, activate}:IProps ) => {
   
+  const handleClickLogout = () => {
+    console.log('fazendo logout');
+  }
 
   return (
     <>
@@ -17,7 +20,7 @@ const Profile = ({active, activate}:IProps ) => {
         </S.ContainerPhoto>
     <S.ActionsList>
         <S.ActionItem>Alterar Dados</S.ActionItem>
-        <S.ActionItem>Logout</S.ActionItem>
+        <S.ActionItem onClick={handleClickLogout}>Logout</S.ActionItem>
     </S.ActionsList>
     </S.ContainerAvatar>
     
