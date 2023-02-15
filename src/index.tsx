@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import ToastProvider from './context/Toast';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <ToastProvider>
+      <App />
+    </ToastProvider>
   </React.StrictMode>
 );
 
