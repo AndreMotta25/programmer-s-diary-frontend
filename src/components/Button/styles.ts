@@ -7,7 +7,7 @@ export const ButtonStyled = styled.button`
   padding:0.3rem 0;
   cursor: pointer;
   outline: none;
-  font-family: 'Source Code Pro', monospace;
+  font-family: 'Roboto Slab', serif;
   font-size: 1.6rem;
 
   &:hover {
