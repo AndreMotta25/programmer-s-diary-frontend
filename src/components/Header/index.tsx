@@ -1,19 +1,23 @@
 import React, { useState } from 'react'
 import * as S from './styles'
 import { Link } from 'react-router-dom'
-import Profile from '../Avatar'
+import Profile from '../Profile'
+import useShowElement from '../../hooks/useShowElement'
 
+interface IHeader {
+  code: string;
+}
+const Header = ({code}:IHeader) => {
 
-const Header = () => {
-  const [active, setActive] = useState(false);
+  const activationHandler = useShowElement();
 
   const handleClickSave = () => {
-    console.log('salvando')
+    console.log('salvando');
   }
 
   return (
-    <S.Header active={active}>
-      <Profile active={active} activate={setActive}/>
+    <S.Header active={activationHandler.active}>
+      <Profile active={activationHandler.active} activate={activationHandler.setActive}/>
       <S.Action onClick={handleClickSave}>
         Salvar
       </S.Action>
@@ -21,4 +25,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default React.memo(Header);
