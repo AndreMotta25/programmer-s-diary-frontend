@@ -78,6 +78,7 @@ const Register = () => {
       same_password:'Desenhos1@'
     },
     onSubmit: handleSubmit,
+    validationSchema:schemaRegisterUser
   });
   
   return (
