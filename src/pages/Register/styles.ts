@@ -30,3 +30,9 @@ export const GoToLoginPage = styled(RegisterLogin)`
         display: block;
     }
 `
+
+export const Result = styled.p`
+    font-family: 'Source Code Pro', monospace;
+    text-align: center;
+    margin-bottom: 2rem;
+`

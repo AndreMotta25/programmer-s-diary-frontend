@@ -45,6 +45,7 @@ const isFormError = (value:unknown): value is IFormError => {
 const Register = () => {
   const { toast } = useToastContext();
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false)
 
   const handleSubmit = async () => {
     setLoading(loading => !loading)
@@ -54,6 +55,7 @@ const Register = () => {
         username:formik.values.username,
         password:formik.values.password
       })
+      setSuccess(true);
       toast('Usuario criado com sucesso', {status:'success'})
     }
     catch(e){
@@ -97,6 +99,7 @@ const Register = () => {
                         <Input type='password' variant='solid' label='Repita a senha' onChange={formik.handleChange}  value={formik.values.same_password} id='same_password' name='same_password' error={(formik.touched.same_password && formik.errors.same_password) || ''}/>
                     </div>
                     {loading && <Loading/>}
+                    {success && <S.Result>Para entrar confirme seu endereço de email</S.Result>}
                     <Button type='submit'>Cadastrar</Button>  
                 </form> 
                 <S.GoToLoginPage>
