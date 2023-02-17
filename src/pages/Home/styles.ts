@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ButtonStyled } from "../../components/Button/styles";
 
 export const ContainerBackground = styled.div`
   width: 100%;
@@ -19,4 +20,52 @@ export const ContainerBlack = styled.div`
     flex: 1;
     background-color: ${({theme}) => theme.colors.background};
     padding:3rem;
+    display: flex;
+    flex-direction: column;
 ` 
+
+export const ContainerModal = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`
+export const ContainerInput = styled.div`
+  width: 100%;
+`
+
+export const ContainerForm = styled.div`
+  display: flex;
+  gap: 20px;
+`
+
+export const ButtonInherit = styled(ButtonStyled)`
+  padding: 0.5rem 3rem;
+  font-size: 1.6rem;
+  color: #fff;
+  margin: 0 auto;
+  display: block;
+`
+
+// Modal delete
+export const DeleteModal = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+`
+export const DeleteTitle = styled.h2`
+  font-family: 'Source Code Pro', monospace;
+  font-size: 2rem;
+  font-weight: bold;
+`
+export const Decisions = styled.div`
+  display: flex;
+  gap: 20px;
+`
+
+
+export const ButtonDelete = styled(ButtonInherit)`
+    color: #282828;
+    background-color: #F94E4E;
+`
