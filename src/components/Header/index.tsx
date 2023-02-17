@@ -1,20 +1,36 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as S from './styles'
 import { Link } from 'react-router-dom'
 import Profile from '../Profile'
 import useShowElement from '../../hooks/useShowElement'
+import { ICard } from '../../pages/Home'
 
 interface IHeader {
-  code: string;
+  activeCard: ICard | null;
+  cards: ICard[];
+  insertCards: React.Dispatch<React.SetStateAction<ICard[]>>
 }
-const Header = ({code}:IHeader) => {
+
+const Header = ({activeCard, cards, insertCards}:IHeader) => {
 
   const activationHandler = useShowElement();
 
-  const handleClickSave = () => {
-    console.log('salvando');
+  const updatesCardInRealTime = () => {
+    const cardExist = cards.find((card) => card.id === (activeCard as ICard).id);
+    
+    if(cardExist) {
+      Object.assign(cardExist,activeCard);
+      insertCards([...cards]);
+    }
   }
 
+  const handleClickSave = () => {
+    console.log('salvando');
+    
+    updatesCardInRealTime();
+  }
+  
+  console.log(cards);
   return (
     <S.Header active={activationHandler.active}>
       <Profile active={activationHandler.active} activate={activationHandler.setActive}/>
