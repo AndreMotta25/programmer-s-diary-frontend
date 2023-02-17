@@ -1,4 +1,4 @@
-import React , { ChangeEvent, useState , useRef, TextareaHTMLAttributes} from 'react'
+import React , { ChangeEvent, useState , useRef, TextareaHTMLAttributes, useEffect} from 'react'
 import * as S from "./styles"
 import {MdErrorOutline} from 'react-icons/md'
 
@@ -14,14 +14,19 @@ interface IProps extends TextareaHTMLAttributes<HTMLTextAreaElement>{
   label: string;
   value: string;
   styles?: IStyles;
-  onBlurFormik?: (e: ChangeEvent<Element>) => void;
+  onBlur?: (e: ChangeEvent<Element>) => void;
 }
 
-const TextArea = (({variant, label, value , error, id, onBlurFormik, styles, ...rest}:IProps) => {
+const TextArea = (({variant, label, value , error, id, onBlur, styles, ...rest}:IProps) => {
  
   const [focus, setFocus] = useState(false);
   const textArea = useRef<HTMLTextAreaElement>(null);
 
+  useEffect(() => {
+    if(value !== '')
+      setFocus(true)
+  },[value])
+  
   // posso exportar
   const handleFocus = () => {
     setFocus(true);
@@ -32,7 +37,7 @@ const TextArea = (({variant, label, value , error, id, onBlurFormik, styles, ...
   
   // posso exportar
   const handleBlur = (e:ChangeEvent<Element>) => { 
-    if(typeof onBlurFormik === "function") onBlurFormik(e);
+    if(typeof onBlur === "function") onBlur(e);
     if(value === ""){
       setFocus(false);
     }
