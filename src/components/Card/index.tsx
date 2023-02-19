@@ -1,7 +1,7 @@
 import React, { useState , MouseEvent, useRef} from 'react'
 import { AiFillDelete } from 'react-icons/ai';
 import useShortText, { IShortText } from '../../hooks/useShortText';
-import { ICard } from '../../pages/Home'
+import { ICard } from '../../@types/ICard'
 import * as S from './styles' 
 
 interface IProps {

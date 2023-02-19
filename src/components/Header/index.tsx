@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import * as S from './styles'
-import { Link } from 'react-router-dom'
 import Profile from '../Profile'
 import useShowElement from '../../hooks/useShowElement'
-import { ICard } from '../../pages/Home'
+import { ICard } from '../../@types/ICard'
+
 
 interface IHeader {
   activeCard: ICard | null;
@@ -30,7 +30,6 @@ const Header = ({activeCard, cards, insertCards}:IHeader) => {
     updatesCardInRealTime();
   }
   
-  console.log(cards);
   return (
     <S.Header active={activationHandler.active}>
       <Profile active={activationHandler.active} activate={activationHandler.setActive}/>
