@@ -1,34 +1,59 @@
 import React, { useState } from "react";
 import * as S from "./styles";
 import logo from "../../assets/logo.png";
-import { Formik, useFormik } from "formik";
-import * as yup from "yup";
+import { useFormik } from "formik";
 import Input from "../../components/Input";
 import Loading from "../../components/Loading";
-import { userRepository } from "../../repositories/userRepository";
+import { AxiosError } from "axios";
+import {useUserContext} from '../../hooks/useUserContext'
+import { useNavigate } from "react-router-dom";
+import { loginSchema } from "../../validations/loginSchema";
 
-const LoginSchema = yup.object({
-  email: yup.string().email("email invalido").required("O Email é obrigatório"),
-  password: yup.string().required("A senha é obrigatória"),
-});
+interface IAppError {
+  response: {
+    data:{
+      msg: string;
+    }
+  } 
+}
+
+const isAppError = (value:unknown): value is IAppError => {
+  if(value && value instanceof AxiosError && 'msg' in value.response?.data)
+    return true;
+  return false;  
+}
 
 const Login = () => {
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = () => {
+  const { sign } = useUserContext();
+
+  const handleSubmit = async () => {
     setLoading((loading) => !loading);
-    // userRepository.post('sessions/')
-
-    setTimeout(() => {
+    try {
+      await sign({
+          identification:formik.values.identification,
+          password: formik.values.password
+        })
+      setError(null)
+      navigate('/')  
+    }
+    catch(e) {
+      if(isAppError(e)) {
+        setError(e.response.data.msg);
+      }
+    }
+    finally {
       setLoading((loading) => !loading);
-    }, 3000);
-  };
+    }
+  }; 
 
   const formik = useFormik({
-    initialValues: { email: "", password: "" },
+    initialValues: { identification: "", password: "" },
     onSubmit: handleSubmit,
-    validationSchema: LoginSchema,
+    validationSchema: loginSchema,
   });
 
   return (
@@ -43,16 +68,16 @@ const Login = () => {
             <S.Form onSubmit={formik.handleSubmit}>
               <Input
                 variant="solid"
-                value={formik.values.email}
+                value={formik.values.identification}
                 onChange={formik.handleChange}
                 onBlurFormik={formik.handleBlur}
-                type="email"
-                name="email"
-                id="email"
-                label="email"
+                type="text"
+                name="identification"
+                id="identification"
+                label="Email ou Username"
                 error={
-                  formik.touched.email && formik.errors.email
-                    ? formik.errors.email
+                  formik.touched.identification && formik.errors.identification
+                    ? formik.errors.identification
                     : ""
                 }
               />
@@ -64,7 +89,7 @@ const Login = () => {
                 type="password"
                 name="password"
                 id="password"
-                label={"password"}
+                label="Password"
                 error={
                   formik.touched.password && formik.errors.password
                     ? formik.errors.password
@@ -74,7 +99,7 @@ const Login = () => {
               {loading && <Loading />}
               {error && (
                 <S.AuthenticationError>
-                  Usuario ou senha incorretos
+                  {error}
                 </S.AuthenticationError>
               )}
               <S.Button type="submit">Fazer Login</S.Button>

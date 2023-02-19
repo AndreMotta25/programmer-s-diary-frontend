@@ -18,18 +18,18 @@ export const ContainerBackground = styled.div`
 `;
 
 export const ContainerLogin = styled.div`
-    width: 39.02777%;
-    min-height: 80vh;
+    width: 100%;
+    max-width: 56.2rem;
     background: linear-gradient(to right, #e981d9, #6d22c4);
     margin: 0 auto;
     border-radius: ${({theme}) => theme.border};
-    padding: 3.5rem 0;
+    padding: 10rem 0;
     display: flex;
     align-items: center;
     justify-content: center;
 
     @media screen and (min-width:1440px){
-        max-width: 35%;
+        max-width: 30%;
     }
     @media screen and (min-width:600px) and (max-width:840px){
         width: 60%;
@@ -39,7 +39,7 @@ export const ContainerLogin = styled.div`
     } 
 `;
 export const ContainerElementos = styled.div`
-  width: 51.601%;
+  width: 51.601423487544%;
   display: flex;
   flex-direction: column;
 `
@@ -66,14 +66,6 @@ export const Title = styled.h1`
 
 export const Form = styled.form`
   width: 100%;
-  
-  //! o codigo css abaixo(div...) é redundante, excluir depois.
-  /*div {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 0.563rem;
-  } */
 `;
 
 export const Button = styled(ButtonStyled)`
@@ -93,7 +85,6 @@ export const AuthenticationError = styled.p`
   padding: 0.96rem;
   color: red;
   font-weight:bold;
-  /* width: 90%; */
   margin: 5% auto 10% auto;
 `
 
