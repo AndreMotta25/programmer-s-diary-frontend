@@ -4,24 +4,14 @@ import logo from '../../assets/logo.png'
 import Input from '../../components/Input'
 import {Button} from '../Login/styles'
 import { useFormik } from 'formik'
-import * as yup from 'yup'
-import { userRepository } from '../../repositories/userRepository'
+import { userRepository } from '../../api/userRepository'
 import {AxiosError} from 'axios'
 import { useToastContext } from '../../hooks/useToast'
 import Loading from '../../components/Loading'
 import { Link } from 'react-router-dom'
+import { registerUserSchema } from '../../validations/registerUserSchema'
 
-// todo: colocar isso numa pasta de validaçoes
-const schemaRegisterUser = yup.object({
-  email: yup.string().email('Insira um email valido').required('O campo é obrigatorio'),
-  username:yup.string().required('O campo é obrigatorio').min(5,'O username deve ter no minimo 5 caracteres').trim('Retire os espaços desnecessários').strict(true),
-  password: yup.string().required('O campo é obrigatorio').trim('Retire os espaços da senha').strict(true)
-  .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/,
-  'A senha precisa ter no mínimo 8 caracteres,' +
-  'uma letra maiúscula e uma letra minúscula, ' +
-  'um número e um caracter especial' ),
-  same_password:yup.string().required('O campo é obrigatorio').oneOf([yup.ref('password')],'As senhas não combinam')
-})
+
 
 interface IError {
   msg:string;
@@ -80,7 +70,7 @@ const Register = () => {
       same_password:'Desenhos1@'
     },
     onSubmit: handleSubmit,
-    validationSchema:schemaRegisterUser
+    validationSchema:registerUserSchema
   });
   
   return (

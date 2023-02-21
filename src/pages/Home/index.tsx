@@ -9,8 +9,9 @@ import TextArea from '../../components/TextArea';
 import Select from '../../components/Select';
 import { useFormik } from 'formik';
 import useShowElement from '../../hooks/useShowElement';
-import * as yup from "yup"
 import {v4} from 'uuid'
+import { createCardSchema } from '../../validations/createCardSchema';
+import { ICard } from '../../@types/ICard';
 
 /*
   O preenchimento do codeMirror vai ficar desabilitado até que o activeCard seja diferente de null
@@ -27,27 +28,10 @@ export const languages = [
   }
 ];
 
-const createCardSchema = yup.object(
-{
-  name:yup.string().required("O campo é obrigatorio"),
-  description: yup.string().required("O campo é obrigatorio"), 
-  language: yup.string().required("O campo é obrigatorio"), 
-})
-
-// todo: colocar numa pasta chamada types
-export interface ICard {
-  language:string;
-  description:string;
-  name:string;
-  id:string;
-  code:string;
-}
-
 const Home = () => {
   const modalController = useShowElement();
   const deleteModalController = useShowElement();
-  
-  
+
   const [code, setCode] = useState('');
   const [search, setSearch] = useState('');
   
@@ -130,7 +114,6 @@ const Home = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[code])
 
-  console.log(cardActive)
 
   const sureWantDelete = (id:string) => {
     deleteModalController.activeElement();
