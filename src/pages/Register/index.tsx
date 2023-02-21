@@ -4,13 +4,13 @@ import logo from '../../assets/logo.png'
 import Input from '../../components/Input'
 import {Button} from '../Login/styles'
 import { useFormik } from 'formik'
-import { userRepository } from '../../api/userRepository'
+// import { userRepository } from '../../api/userRepository'
 import {AxiosError} from 'axios'
 import { useToastContext } from '../../hooks/useToast'
 import Loading from '../../components/Loading'
 import { Link } from 'react-router-dom'
 import { registerUserSchema } from '../../validations/registerUserSchema'
-
+import { userAPI } from '../../api'
 
 
 interface IError {
@@ -40,7 +40,7 @@ const Register = () => {
   const handleSubmit = async () => {
     setLoading(loading => !loading)
     try{ 
-      await userRepository.post('user',{
+      await userAPI.postUser({
         email:formik.values.email,
         username:formik.values.username,
         password:formik.values.password
