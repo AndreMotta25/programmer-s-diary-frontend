@@ -29,9 +29,12 @@ export const Action = styled.button`
   color: #fff;
   cursor: pointer;
 
-  &:hover {
+  &:enabled:hover {
     border-color: #46FC42;
     color: #46FC42;
+  }
+  &:disabled {
+    border-color:#9F9E9E
   }
 `
 

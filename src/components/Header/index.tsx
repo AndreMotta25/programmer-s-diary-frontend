@@ -33,7 +33,7 @@ const Header = ({activeCard, cards, insertCards}:IHeader) => {
   return (
     <S.Header active={activationHandler.active}>
       <Profile active={activationHandler.active} activate={activationHandler.setActive}/>
-      <S.Action onClick={handleClickSave}>
+      <S.Action onClick={handleClickSave} disabled={activeCard === null}>
         Salvar
       </S.Action>
     </S.Header>
