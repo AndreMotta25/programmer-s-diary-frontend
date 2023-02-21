@@ -1,13 +1,10 @@
 import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 declare module 'axios' {
-    
-    interface Axios {
-        get<T = any, R = T, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<R>;
-        post<T = any, R = T, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<R>;
-    }
-    
+    interface AxiosResponse<T> extends Promise<T>{} 
 }
+
+
 abstract class HttpClient {
     protected readonly instance: AxiosInstance; 
     protected token:string;
@@ -44,7 +41,7 @@ abstract class HttpClient {
     }
 
     public setAuthorization(token:string){ 
-        this.token = token;
+        this.token = token
         this.initializeRequestInterceptor();
     }
 
