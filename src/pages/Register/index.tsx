@@ -64,10 +64,10 @@ const Register = () => {
   
   const formik = useFormik({
     initialValues:{
-      email:'relaie22@gmail.com',
-      username:'relaie22',
-      password:'Desenhos1@',
-      same_password:'Desenhos1@'
+      email:'',
+      username:'',
+      password:'',
+      same_password:''
     },
     onSubmit: handleSubmit,
     validationSchema:registerUserSchema

@@ -24,7 +24,7 @@ const ToastFy = () => {
     <>
         <S.ContainerFixed>
           {toastItem.map(item => 
-            <S.Container onClick={() => deleteToast(item.id)}>
+            <S.Container onClick={() => deleteToast(item.id)} key={item.id}>
                 <S.Content>
                     {flag[item.status]}
                     <S.Message>{item.message}</S.Message>
