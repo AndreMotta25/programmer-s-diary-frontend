@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState} from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { userAPI, userAuthenticate } from '../../api';
 
 
@@ -10,8 +10,9 @@ interface IUser {
 }
 
 interface IUserContext {
-    sign: (data:IRequestUser) => Promise<void>
-    user: IUser | null
+    sign: (data:IRequestUser) => Promise<void>;
+    logout: () => Promise<void>,
+    user: IUser | null;
 }
 
 interface IRequestUser {
@@ -28,7 +29,6 @@ export const UserContext = createContext({} as IUserContext);
 
 const UserProvider = ({children}:IProps) => {
   const [user, setUser] = useState<IUser | null>(null);
-
   const [token, setToken] = useState<Promise<string | null>>(async () => {
     const token = localStorage.getItem('token');
     try{
@@ -42,16 +42,15 @@ const UserProvider = ({children}:IProps) => {
     }
     
   });
-
-
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const {pathname} = useLocation();
 
   const sign = async ({identification, password}:IRequestUser) => {
         const credentias = await userAuthenticate.authenticateUser({identification,password});
 
         setTokenLocalStorage(credentias.token);
         setUser(credentias.user);
-        setToken(new Promise(resolve => {resolve(credentias.token)}) )
+        setToken(new Promise(resolve => {resolve(credentias.token)}))
   } 
 
   const setAuthorizations = async () => {
@@ -65,6 +64,7 @@ const UserProvider = ({children}:IProps) => {
   const logout = async () => {
     await userAuthenticate.logoutUser();
     localStorage.removeItem('token');
+    navigate('/login');
   }
 
   const setTokenLocalStorage = (token:string) => localStorage.setItem('token', token);
@@ -76,33 +76,27 @@ const UserProvider = ({children}:IProps) => {
 
   useEffect(() => {
     const reloadPage = async () => {
-      if(await token && userAPI.hasAuthorization()) {
-          userAPI.getUser().then(user => {
-              setUser(user);
-              navigate('/')
-          })
-      } 
+      const tokenValid = await token
+
+      if(tokenValid && userAPI.hasAuthorization()) {
+          setUser(await userAPI.getUser())
+          if(pathname === '/login')
+            navigate('/')
+      }       
     }
+    
     reloadPage()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
-
-  console.log(userAPI)
-
-
+  },[pathname])
+  
   return (
     <UserContext.Provider value={{
         sign,
-        user
+        logout,
+        user,
     }}>
-        {children}
+      {children}
     </UserContext.Provider>
   )
 }
 
 export default UserProvider
-
-
-/*
-    todo: só atribuir o token se o mesmo estiver valido
-*/ 
