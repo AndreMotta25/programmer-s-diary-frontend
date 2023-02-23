@@ -54,6 +54,13 @@ export const Extras = styled.div`
   align-items: center;
 
 `
+export const Actions = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+`
+
 export const Button = styled.button`
   width: 40px;
   height: 40px;

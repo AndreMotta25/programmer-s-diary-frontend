@@ -1,8 +1,9 @@
-import React, { useState , MouseEvent, useRef} from 'react'
+import React, { useState} from 'react'
 import { AiFillDelete } from 'react-icons/ai';
 import useShortText, { IShortText } from '../../hooks/useShortText';
 import { ICard } from '../../@types/ICard'
 import * as S from './styles' 
+import { BiEdit } from 'react-icons/bi';
 
 interface IProps {
     card: ICard
@@ -17,35 +18,30 @@ const Card = ({card, updateCard, isActive, deleteCard}:IProps) => {
   const [description, handleClickDescription] = useShortText(descriptionShort);
   const [active, setActive] = useState(false);
 
-  const descriptionRef = useRef<HTMLParagraphElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null) 
 
-
-  const handleOpeningModal = (e: MouseEvent) => {
-    if(e.target !== descriptionRef.current && !containerRef.current?.contains(e.target as HTMLElement)) {
-      updateCard(card)
-    }
-    console.log(e)
-  }
-  
   const handleDescription = () =>  {
     handleClickDescription();
     setActive(!active);
   }
 
   return (
-    <S.Container  onClick={handleOpeningModal} extendCard={active} isActive={isActive}>
+    <S.Container  extendCard={active} isActive={isActive}>
         <S.Name>{card.name}</S.Name>
-        <S.Description ref={descriptionRef} onClick={handleDescription}>
+        <S.Description  onClick={handleDescription}>
           {description}
         </S.Description>
-        <S.Extras ref={containerRef}>
+        <S.Extras >
           <S.TypeLanguage>
             {card.language}
           </S.TypeLanguage>
+          <S.Actions>
           <S.Button  onClick={() => {deleteCard(card.id)}}>
             <AiFillDelete size={'100%'}/>
           </S.Button>
+          <S.Button  onClick={() => {updateCard(card)}}>
+            <BiEdit size={'100%'}/>
+          </S.Button>
+          </S.Actions>
         </S.Extras>
         
     </S.Container>
