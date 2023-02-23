@@ -1,7 +1,7 @@
 import React from 'react'
 import * as S from './styles'
 import Search from '../Search'
-import { ICard } from '../../pages/Home';
+import { ICard } from '../../@types/ICard';
 import Card from '../Card';
 
 
@@ -17,13 +17,13 @@ interface IMenu {
   search: string;
   modalController: IModalController;
   cards: ICard[],
-  fillModal: (card:ICard) => void;
+  updateCard: (card:ICard) => void;
   clearModal: () => void;
   activeCard: ICard | null;
   deleteCard: (id:string) => void;
 }
 
-const Menu = ({research, search, modalController, cards, fillModal, clearModal, activeCard, deleteCard}:IMenu) => {
+const Menu = ({research, search, modalController, cards, updateCard, clearModal, activeCard, deleteCard}:IMenu) => {
   const activeModal = () => {
     clearModal();
     modalController.activeElement();
@@ -35,7 +35,7 @@ const Menu = ({research, search, modalController, cards, fillModal, clearModal, 
         <S.ContainerCards>
           {
             cards.map((card) => (
-              <Card card={card} key={card.id} fillModal={fillModal} isActive={card.id === activeCard?.id} deleteCard={deleteCard}/>
+              <Card card={card} key={card.id} updateCard={updateCard} isActive={card.id === activeCard?.id} deleteCard={deleteCard}/>
             ))
           }
         </S.ContainerCards>

@@ -83,7 +83,7 @@ const Home = () => {
     clearModal();
   }
 
-  const fillModal = (card:ICard) => {
+  const updateCard = (card:ICard) => {
     formik.setValues({...card});
     modalController.activeElement();
     action.current = 'Atualizar'
@@ -128,7 +128,7 @@ const Home = () => {
             <Header cards={cards} insertCards={setCards} activeCard={cardActive}/>
             <CodeMirror code={code} insertCode={setCode}/>
           </S.ContainerBlack>
-          <Menu deleteCard={sureWantDelete} research={setSearch} search={search} modalController={modalController} cards={cards} fillModal={fillModal} clearModal={clearModal} activeCard={cardActive}/>
+          <Menu deleteCard={sureWantDelete} research={setSearch} search={search} modalController={modalController} cards={cards} updateCard={updateCard} clearModal={clearModal} activeCard={cardActive}/>
           {<Modal controller={modalController}>
             <S.ContainerModal>
               <form onSubmit={formik.handleSubmit}>

@@ -6,12 +6,12 @@ import * as S from './styles'
 
 interface IProps {
     card: ICard
-    fillModal: (card:ICard) => void;
+    updateCard: (card:ICard) => void;
     isActive: boolean;
     deleteCard: (id:string) => void;
 }
 
-const Card = ({card, fillModal, isActive, deleteCard}:IProps) => {
+const Card = ({card, updateCard, isActive, deleteCard}:IProps) => {
   const descriptionShort: IShortText = {text:card.description, len:50}
 
   const [description, handleClickDescription] = useShortText(descriptionShort);
@@ -23,7 +23,7 @@ const Card = ({card, fillModal, isActive, deleteCard}:IProps) => {
 
   const handleOpeningModal = (e: MouseEvent) => {
     if(e.target !== descriptionRef.current && !containerRef.current?.contains(e.target as HTMLElement)) {
-      fillModal(card)
+      updateCard(card)
     }
     console.log(e)
   }
