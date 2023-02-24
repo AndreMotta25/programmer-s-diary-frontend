@@ -30,7 +30,8 @@ export const Description = styled.p`
     font-family: "Source Code Pro", monospace;
     margin-top: 10px;
     margin-bottom: 20px;
-
+    cursor: pointer;
+    
     &:hover {
       color: #282828;
     }
@@ -58,7 +59,7 @@ export const Actions = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  flex-direction: row-reverse;
 `
 
 export const Button = styled.button`
