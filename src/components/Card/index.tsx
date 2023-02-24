@@ -4,6 +4,8 @@ import useShortText, { IShortText } from '../../hooks/useShortText';
 import { ICard } from '../../@types/ICard'
 import * as S from './styles' 
 import { BiEdit } from 'react-icons/bi';
+import useShowElement from '../../hooks/useShowElement';
+import Modal from '../Modal';
 
 interface IProps {
     card: ICard
@@ -17,14 +19,18 @@ const Card = ({card, updateCard, isActive, deleteCard}:IProps) => {
 
   const [description, handleClickDescription] = useShortText(descriptionShort);
   const [active, setActive] = useState(false);
-
+  const modalController = useShowElement();
 
   const handleDescription = () =>  {
     handleClickDescription();
     setActive(!active);
   }
+  const remove = () => {
+    deleteCard(card.id)
+  }
 
   return (
+    <>
     <S.Container  extendCard={active} isActive={isActive}>
         <S.Name>{card.name}</S.Name>
         <S.Description  onClick={handleDescription}>
@@ -35,7 +41,7 @@ const Card = ({card, updateCard, isActive, deleteCard}:IProps) => {
             {card.language}
           </S.TypeLanguage>
           <S.Actions>
-          <S.Button  onClick={() => {deleteCard(card.id)}}>
+          <S.Button  onClick={modalController.activeElement}>
             <AiFillDelete size={'100%'}/>
           </S.Button>
           <S.Button  onClick={() => {updateCard(card)}}>
@@ -43,8 +49,17 @@ const Card = ({card, updateCard, isActive, deleteCard}:IProps) => {
           </S.Button>
           </S.Actions>
         </S.Extras>
-        
     </S.Container>
+      <Modal controller={modalController}>
+        <S.DeleteModal>
+          <S.DeleteTitle>Tem certeza que deseja deletar?</S.DeleteTitle>
+          <S.Decisions>
+            <S.ButtonDelete onClick={remove}>Excluir</S.ButtonDelete>
+            <S.CancelButton onClick={modalController.activeElement}>Cancelar</S.CancelButton>
+          </S.Decisions>
+        </S.DeleteModal>    
+      </Modal>
+  </>
   )
 }
 

@@ -46,26 +46,3 @@ export const ButtonInherit = styled(ButtonStyled)`
   display: block;
 `
 
-// Modal delete
-export const DeleteModal = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 20px;
-`
-export const DeleteTitle = styled.h2`
-  font-family: 'Source Code Pro', monospace;
-  font-size: 2rem;
-  font-weight: bold;
-`
-export const Decisions = styled.div`
-  display: flex;
-  gap: 20px;
-`
-
-
-export const ButtonDelete = styled(ButtonInherit)`
-    color: #282828;
-    background-color: #F94E4E;
-`

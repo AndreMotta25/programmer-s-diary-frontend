@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ButtonInherit } from '../../pages/Home/styles';
 
 
 interface IProps {
@@ -12,7 +13,6 @@ export const Container = styled.div`
   border-radius: 1rem;
   padding: 0.8rem;
   min-height: ${({extendCard}:IProps) => (extendCard && 'auto')};
-  cursor: pointer;
   flex: 0 0 13.2rem;
   display: flex;
   flex-direction: column;
@@ -76,3 +76,25 @@ export const Button = styled.button`
     color: #dd2727;
   }
 `
+export const DeleteModal = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+`
+export const DeleteTitle = styled.h2`
+  font-family: 'Source Code Pro', monospace;
+  font-size: 2rem;
+  font-weight: bold;
+`
+export const Decisions = styled.div`
+  display: flex;
+  gap: 20px;
+`
+
+export const ButtonDelete = styled(ButtonInherit)`
+    color: #282828;
+    background-color: #F94E4E;
+`
+export const CancelButton = styled(ButtonInherit)``

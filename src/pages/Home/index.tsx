@@ -30,8 +30,6 @@ export const languages = [
 
 const Home = () => {
   const modalController = useShowElement();
-  const deleteModalController = useShowElement();
-
   const [code, setCode] = useState('');
   const [search, setSearch] = useState('');
   
@@ -44,7 +42,6 @@ const Home = () => {
 
   const [cardActive, setCardActive] = useState<ICard | null>(null) 
   const action = useRef('Criar'); 
-  const cardToDeleteId = useRef<string>('')
 
   const clearModal = () => {
       formik.setValues({
@@ -97,9 +94,6 @@ const Home = () => {
   // aqui teria que mexer diretamente na api também
   const deleteCard = (id:string) => {
     deleteInRealTime(id);
-
-    cardToDeleteId.current = '';
-    deleteModalController.activeElement();
   }
 
   const formik = useFormik({
@@ -114,12 +108,6 @@ const Home = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[code])
 
-
-  const sureWantDelete = (id:string) => {
-    deleteModalController.activeElement();
-    cardToDeleteId.current = id;
-  }
-
   return (
     
     <S.ContainerBackground>
@@ -128,7 +116,7 @@ const Home = () => {
             <Header cards={cards} insertCards={setCards} activeCard={cardActive}/>
             <CodeMirror code={code} insertCode={setCode}/>
           </S.ContainerBlack>
-          <Menu deleteCard={sureWantDelete} research={setSearch} search={search} modalController={modalController} cards={cards} updateCard={updateCard} clearModal={clearModal} activeCard={cardActive}/>
+          <Menu deleteCard={deleteCard} research={setSearch} search={search} modalController={modalController} cards={cards} updateCard={updateCard} clearModal={clearModal} activeCard={cardActive}/>
           {<Modal controller={modalController}>
             <S.ContainerModal>
               <form onSubmit={formik.handleSubmit}>
@@ -146,16 +134,6 @@ const Home = () => {
             </S.ContainerModal>
           </Modal>}
         </S.ContainerDefault>
-        <Modal controller={deleteModalController}>
-          <S.DeleteModal>
-            <S.DeleteTitle>Tem certeza que deseja deletar?</S.DeleteTitle>
-            <S.Decisions>
-              <S.ButtonDelete onClick={() => {deleteCard(cardToDeleteId.current)}}>Excluir</S.ButtonDelete>
-              <S.ButtonInherit onClick={() => deleteModalController.activeElement()}>Cancelar</S.ButtonInherit>
-            </S.Decisions>
-          </S.DeleteModal>
-          
-        </Modal>
     </S.ContainerBackground>
   )
 }
