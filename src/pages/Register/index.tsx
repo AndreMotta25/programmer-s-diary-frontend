@@ -4,7 +4,6 @@ import logo from '../../assets/logo.png'
 import Input from '../../components/Input'
 import {Button} from '../Login/styles'
 import { useFormik } from 'formik'
-// import { userRepository } from '../../api/userRepository'
 import {AxiosError} from 'axios'
 import { useToastContext } from '../../hooks/useToast'
 import Loading from '../../components/Loading'
@@ -50,6 +49,7 @@ const Register = () => {
     }
     catch(e){
       if(isFormError(e)) {
+        // Se usarmos classe para resolver isso, vamos ter o dry
          let errors = {} 
          e.response.data.errors.forEach((error) => {
           errors = {...errors, [error.param]: error.msg}
