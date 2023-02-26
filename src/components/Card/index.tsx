@@ -32,7 +32,11 @@ const Card = ({card, updateCard, isActive, deleteCard}:IProps) => {
   return (
     <>
     <S.Container  extendCard={active} isActive={isActive}>
-        <S.Name>{card.name}</S.Name>
+        <S.Title>
+          <S.Name>{card.name}</S.Name>
+          {card?.save !== undefined && !card?.save && <S.Unsaved/>}
+        </S.Title>
+        
         <S.Description  onClick={handleDescription}>
           {description}
         </S.Description>

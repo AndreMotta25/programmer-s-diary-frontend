@@ -16,7 +16,6 @@ import { ICard } from '../../@types/ICard';
 /*
   O preenchimento do codeMirror vai ficar desabilitado até que o activeCard seja diferente de null
 */ 
-
 export const languages = [
   {
     value:'css',
@@ -63,18 +62,21 @@ const Home = () => {
       name:formik.values.name,
       description:formik.values.description,
       language:formik.values.language,
-      code:formik.values.code || '' 
+      code:formik.values.code || '',
     }; 
-    let cardExists = cards.find(elem => elem.id === card.id);
+
+    let cardExists = cards.find(elem => elem.id === card.id) ;
     
-    if(cardExists){
-      Object.assign(cardExists, card)
+    if(cardExists && (card.name !== cardExists.name || card.description !== cardExists.description || card.language !== cardExists.language)){
+      card.save = false;
+      Object.assign(cardExists, card);
       setCards([...cards]);
     }
-    else
+    else if(!cardExists){
+      card.save = false;
       setCards([...cards, card]);
-    
-    setCardActive(card); 
+    }
+    setCardActive({...card}); 
 
     setCode(card.code);
     clearModal();
@@ -87,6 +89,8 @@ const Home = () => {
   }
 
   const deleteInRealTime = (id:string) => {
+    if(cardActive?.id === id) 
+      setCardActive(null)
     const remainingCards = cards.filter((card) => card.id !== id);
     setCards([...remainingCards])
   }
@@ -103,18 +107,37 @@ const Home = () => {
   })
 
   useEffect(() => {
-    if(cardActive)
+    if(cardActive){
       cardActive.code = code;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[code])
+      
+      let card = cards.find(card => card.id === cardActive.id);
+      
+      console.log(card)
+      
+      if(card && cardActive.code !== card.code){
+        card.code = code;
+        card.save = false;
+        setCards([...cards])
+      }
+      
+      /* 
+      const cardUnsaved =  cards.find(card => card.id === cardActive.id);
+      if(cardUnsaved && cardActive.code !== cardUnsaved.code){
+        cardUnsaved.save = false;
+        setCards([...cards])
+      }
+      */
+    }
+  },[code, cardActive])
+
 
   return (
     
     <S.ContainerBackground>
         <S.ContainerDefault>
-          <S.ContainerBlack>
+          <S.ContainerBlack >
             <Header cards={cards} insertCards={setCards} activeCard={cardActive}/>
-            <CodeMirror code={code} insertCode={setCode}/>
+            <CodeMirror code={(cardActive && code) || '' } insertCode={setCode}/>
           </S.ContainerBlack>
           <Menu deleteCard={deleteCard} research={setSearch} search={search} modalController={modalController} cards={cards} updateCard={updateCard} clearModal={clearModal} activeCard={cardActive}/>
           {<Modal controller={modalController}>

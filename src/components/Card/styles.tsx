@@ -99,3 +99,15 @@ export const ButtonDelete = styled(ButtonInherit)`
     background-color: #F94E4E;
 `
 export const CancelButton = styled(ButtonInherit)``
+
+export const Title = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+export const Unsaved = styled.div`
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: #fff;
+`
