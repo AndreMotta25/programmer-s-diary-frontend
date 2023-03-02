@@ -8,6 +8,7 @@ import { AxiosError } from "axios";
 import {useUserContext} from '../../hooks/useUserContext'
 import { useNavigate } from "react-router-dom";
 import { loginSchema } from "../../validations/loginSchema";
+import { Link } from "react-router-dom";
 
 interface IAppError {
   response: {
@@ -96,6 +97,7 @@ const Login = () => {
                     : ""
                 }
               />
+              <S.ResetPassword to='/recuperar-senha'>Esqueçeu a senha</S.ResetPassword>
               {loading && <Loading />}
               {error && (
                 <S.AuthenticationError>

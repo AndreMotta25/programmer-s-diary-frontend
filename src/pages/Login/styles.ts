@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import background from "../../assets/background_login.png" 
 import { ButtonStyled } from '../../components/Button/styles';
@@ -66,6 +67,7 @@ export const Title = styled.h1`
 
 export const Form = styled.form`
   width: 100%;
+  position:relative;
 `;
 
 export const Button = styled(ButtonStyled)`
@@ -73,6 +75,7 @@ export const Button = styled(ButtonStyled)`
   color: #fff;
   width: 100%;
   margin-bottom: 0.9rem;
+  margin-top: 1rem;
 `; 
 
 export const AuthenticationError = styled.p`
@@ -94,3 +97,13 @@ export const Cadastrar = styled.div`
     text-align: center;
     font-size: 1.6rem;
 `; 
+
+export const ResetPassword = styled(Link)`
+  position: absolute;
+  bottom: 32%;
+  right: 0;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: 'Source Code Pro', monospace;
+`
