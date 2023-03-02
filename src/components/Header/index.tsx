@@ -18,8 +18,8 @@ const Header = ({activeCard, cards, insertCards}:IHeader) => {
   const updatesCardInRealTime = () => {
     const cardExist = cards.find((card) => card.id === (activeCard as ICard).id);
     
-    if(cardExist) {
-      Object.assign(cardExist,activeCard);
+    if(cardExist && activeCard) {    
+      Object.assign(cardExist,{...activeCard, save:true});
       insertCards([...cards]);
     }
   }
@@ -29,7 +29,7 @@ const Header = ({activeCard, cards, insertCards}:IHeader) => {
     
     updatesCardInRealTime();
   }
-  
+  console.log(cards)
   return (
     <S.Header active={activationHandler.active}>
       <Profile active={activationHandler.active} activate={activationHandler.setActive}/>
