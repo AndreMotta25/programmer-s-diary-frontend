@@ -2,15 +2,19 @@ import { isAxiosError } from 'axios'
 import React, { useRef, useState } from 'react'
 import { AiOutlineUpload } from 'react-icons/ai'
 import { userAPI } from '../../../../api'
+import useHandlerError from '../../../../hooks/useHandlerError'
+import { useToastContext } from '../../../../hooks/useToast'
 import { useUserContext } from '../../../../hooks/useUserContext'
 import { ContainerUpdate } from '../../styles'
 import * as S from './styles'
 
+
 const Avatar = () => {
   const refImage = useRef<HTMLImageElement | null>(null)   
   const {user,loading} = useUserContext()  
-  const [message, setMessage] = useState('');
-
+  const {handleError} = useHandlerError();
+  const {toast} = useToastContext();
+  
   console.log(user)
      
   const preview = (file:File) => {
@@ -25,11 +29,10 @@ const Avatar = () => {
   const upload = async (file:File) => {
     try{
        await userAPI.uploadPhoto(file);
-       setMessage('Upload feito com sucesso');
+       toast('Upload feito com sucesso',{status:'success',autoCloseIn:1000})
     }
     catch(e){
-        if(isAxiosError(e)) 
-          setMessage('Ocorreu um erro no upload da foto');
+      handleError(e)
     }
   }
 
@@ -52,7 +55,6 @@ const Avatar = () => {
                 <img ref={refImage} src={`http://localhost:3333/avatar/${user?.avatar}`} alt='foto'/>
                 <AiOutlineUpload className='upload-photo' size="60%"/>
             </S.PhotoButton>
-            <S.Message>{message}</S.Message>
         </form>
         }
     </ContainerUpdate>

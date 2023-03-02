@@ -31,23 +31,5 @@ export const PhotoButton = styled.label`
     color: #fff;
     transition: color 0.3s ease;
   }
-  &::before {
-      content: '';
-      display: block;
-      width: 7.6rem;
-      height: 7.6rem;
-      background-color: rgba(0,0,0,50%);
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      border-radius: 50%;
-    }
-`
-
-export const Message = styled.p`
-    font-size: 1.8rem;
-    margin: 2rem auto;
-    font-weight: bold;
-    text-align: center;
-
+  
 `
