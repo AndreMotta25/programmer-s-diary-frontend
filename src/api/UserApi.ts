@@ -45,7 +45,13 @@ class UserAPI extends HttpClient
     async putProfileUser({username, email}:IPutProfileUser) {
         return await this.instance.put('/profile-update', {username,email})
     }
-    
+    async uploadPhoto(file:File) {
+        await this.instance.patch('/avatar', {avatar:file}, {
+            headers:{
+                "Content-Type": "multipart/form-data",
+            }
+        })
+    }
 }
 export {UserAPI}
 
