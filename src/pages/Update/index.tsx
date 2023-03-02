@@ -1,6 +1,7 @@
 import React,{ useState, useEffect} from 'react'
 import { NavLink } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
+import Avatar from './components/Avatar';
 import Profile from './components/Profile'; 
 import Security from './components/Security';
 import * as S from './styles'
@@ -32,7 +33,9 @@ const Update = () => {
         </nav>
         <Routes>
           <Route path='' element={<Profile/>}/>
+          
           <Route path='seguranca' element={<Security/>}/>
+          <Route path='avatar' element={<Avatar/>}/>
         </Routes> 
       </S.Container>
     </S.ContainerBackground>

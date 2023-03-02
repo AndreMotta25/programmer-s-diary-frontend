@@ -40,7 +40,7 @@ export const ListItem = styled.li`
    }
 `
 
-// sons
+// sons elements
 export const ContainerUpdate = styled.div`
   & > div {
     margin-bottom: 5%;
