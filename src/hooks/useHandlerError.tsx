@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios';
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { useToastContext } from './useToast'; 
 
 interface IError {
@@ -38,7 +39,8 @@ const useHandlerError = (errorUnknow?: unknown) => {
   const [errorsForm, setErrorsForm] =  useState<IError[]>([])  
   const {toast} = useToastContext();
   const [error, setError] = useState<unknown | null>(errorUnknow);  
-  
+  const navigate = useNavigate();
+
   useEffect(() => {
     let errors:IError[] = [];
     if(isFormError(error)) {
@@ -49,10 +51,14 @@ const useHandlerError = (errorUnknow?: unknown) => {
     }
     else if(isAppError(error)) {
         const message = error.response.data.msg;
-        if(message.toLowerCase() === 'token invalido')
-            toast('O seu token expirou, faça login novamente',{status:'error'});
+        if(message.toLowerCase() === 'token invalido'){
+          setTimeout(() => {
+            navigate('/login');
+          },2000)
+          toast('O seu token expirou, voce será redirecionado em 2 segundos',{status:'error', autoCloseIn:2000});
+        }
         else 
-            toast("Ocorreu um erro, faça login novamente.",{status:'error'})
+            toast(`${error.response.data.msg}`,{status:'error', autoCloseIn:1000})
     }
   },[error])
 
