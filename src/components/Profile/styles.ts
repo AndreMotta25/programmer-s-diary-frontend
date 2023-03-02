@@ -74,6 +74,7 @@ export const ContainerPhoto = styled.div`
   & img {
     width: 100%;
     display: block;
+    height: 100%;
     border-radius: 50%;
     border: 0.2rem solid #fff; 
   }
