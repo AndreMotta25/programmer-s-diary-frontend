@@ -34,7 +34,8 @@ export const Action = styled.button`
     color: #46FC42;
   }
   &:disabled {
-    border-color:#9F9E9E
+    border-color:#9F9E9E;
+    cursor: not-allowed;
   }
 `
 
