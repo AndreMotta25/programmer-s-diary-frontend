@@ -1,33 +1,37 @@
 import { useCodeMirror } from '@uiw/react-codemirror';
 import { useEffect, useRef, useState } from 'react'
 import { dracula } from '@uiw/codemirror-theme-dracula';
-import { loadLanguage } from '@uiw/codemirror-extensions-langs';
+import { loadLanguage, LanguageName } from '@uiw/codemirror-extensions-langs';
 import * as S from "./styles"
 import React from 'react';
+
+
 
 interface IProps {
     code: string;
     insertCode:  React.Dispatch<React.SetStateAction<string>>
+    language: LanguageName;
 }
-const CodeMirror = ({code, insertCode}:IProps) => {
-    const container = useRef<HTMLDivElement>(null); 
-    
+const CodeMirror = ({code, insertCode,language}:IProps) => {
+    const container = useRef<HTMLDivElement>(null);
+     
     const onChange = React.useCallback((value: string)=> {
         insertCode(value)
-    },[])
+    },[insertCode])
+
     
     const {setContainer} = useCodeMirror(
     {
         container: container.current,
         theme:dracula,
-        extensions:[loadLanguage('javascript')!],
+        extensions:[loadLanguage(language || 'javascript')!],
         height: '100%',
         value:code,
-        placeholder:"Insira seu codigo aqui",
+        placeholder:"Antes de começar crie um card",
         onChange:onChange,
         basicSetup: {
             autocompletion:true
-        }
+        },
     })
      
   useEffect(() => {

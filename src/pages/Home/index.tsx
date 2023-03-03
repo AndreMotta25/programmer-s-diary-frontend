@@ -12,20 +12,15 @@ import useShowElement from '../../hooks/useShowElement';
 import {v4} from 'uuid'
 import { createCardSchema } from '../../validations/createCardSchema';
 import { ICard } from '../../@types/ICard';
+import { LanguageName,langNames } from '@uiw/codemirror-extensions-langs';
 
-/*
-  O preenchimento do codeMirror vai ficar desabilitado até que o activeCard seja diferente de null
-*/ 
-export const languages = [
-  {
-    value:'css',
-    label:'css'
-  },
-  {
-    value:'javascript',
-    label:'js'
+
+const langs = langNames.sort().map(lang => {
+  return {
+    value:lang,
+    label:lang
   }
-];
+})
 
 const Home = () => {
   const modalController = useShowElement();
@@ -130,14 +125,14 @@ const Home = () => {
     }
   },[code, cardActive])
 
-
+  console.log(formik)
   return (
     
     <S.ContainerBackground>
         <S.ContainerDefault>
           <S.ContainerBlack >
             <Header cards={cards} insertCards={setCards} activeCard={cardActive}/>
-            <CodeMirror code={(cardActive && code) || '' } insertCode={setCode}/>
+            <CodeMirror code={(cardActive && code) || '' } insertCode={setCode} language={cardActive?.language as LanguageName}/>
           </S.ContainerBlack>
           <Menu deleteCard={deleteCard} research={setSearch} search={search} modalController={modalController} cards={cards} updateCard={updateCard} clearModal={clearModal} activeCard={cardActive}/>
           {<Modal controller={modalController}>
@@ -149,7 +144,7 @@ const Home = () => {
                     <TextArea variant='solid' error={(formik.touched.description && formik.errors.description)|| '' } id='description' name='description' value={formik.values.description} label='descrição' onChange={formik.handleChange} onBlur={formik.handleBlur}/>
                   </S.ContainerInput>
                   <S.ContainerInput>
-                    <Select options={languages} error={formik.errors.language} value={formik.values.language} onChange={formik.handleChange} id='language' name='language'/>
+                    <Select options={langs} error={formik.errors.language} value={formik.values.language} onChange={formik.handleChange} id='language' name='language'/>
                   </S.ContainerInput>
                 </S.ContainerForm>
                 <S.ButtonInherit type="submit">{action.current}</S.ButtonInherit>

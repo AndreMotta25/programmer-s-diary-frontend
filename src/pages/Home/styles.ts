@@ -22,6 +22,7 @@ export const ContainerBlack = styled.div`
     padding:3rem;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 ` 
 
 export const ContainerModal = styled.div`
