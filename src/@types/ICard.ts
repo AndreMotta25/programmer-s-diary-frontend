@@ -4,7 +4,8 @@ interface ICard {
     name:string;
     id:string;
     code:string;
-    save?:boolean
+    save?:boolean;
+    update_date: Date
   }
 
 export type {ICard}

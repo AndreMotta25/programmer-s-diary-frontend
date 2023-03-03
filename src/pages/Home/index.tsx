@@ -27,12 +27,12 @@ const Home = () => {
   const [code, setCode] = useState('');
   const [search, setSearch] = useState('');
   
-  const [cards, setCards] = useState<ICard[]>([{id:'1',name:'teste1',description:'is simply dummy text of the printing and typesetting industry.',language:'javascript', code:'console.log()'},
-                                               {id:'2',name:'teste2',description:'Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',language:'javascript', code:'console.log()'},
-                                               {id:'3',name:'teste3',description:'teste3',language:'js', code:'console.log()'},
-                                               {id:'4',name:'teste4',description:'teste4',language:'css', code:'p{}'},
-                                               {id:'5',name:'teste5',description:'teste5',language:'css', code:'p{}'},
-                                               {id:'6',name:'teste6',description:'teste6',language:'css', code:'p{}'}]);
+  const [cards, setCards] = useState<ICard[]>([{id:'1',name:'black',  update_date:new Date('03/02/2023'),description:'is simply dummy text of the printing and typesetting industry.',language:'javascript', code:'console.log()'},
+                                               {id:'2',name:'sabbath',update_date:new Date('03/01/2023'),description:'Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',language:'javascript', code:'console.log()'},
+                                               {id:'3',name:'ozzy',   update_date:new Date('03/03/2023'), description:'teste3',language:'javascript', code:'console.log()'},
+                                               {id:'4',name:'pearl jam', update_date:new Date('02/21/2023'),description:'teste4',language:'css', code:'p{}'},
+                                               {id:'5',name:'nirvana',update_date:new Date('02/22/2023') ,description:'teste5',language:'css', code:'p{}'},
+                                               {id:'6',name:'acdc',update_date:new Date('02/03/2023') ,description:'teste6',language:'css', code:'p{}'}]);
 
   const [cardActive, setCardActive] = useState<ICard | null>(null) 
   const action = useRef('Criar'); 
@@ -58,6 +58,7 @@ const Home = () => {
       description:formik.values.description,
       language:formik.values.language,
       code:formik.values.code || '',
+      update_date: new Date()
     }; 
 
     let cardExists = cards.find(elem => elem.id === card.id) ;
@@ -66,10 +67,11 @@ const Home = () => {
       card.save = false;
       Object.assign(cardExists, card);
       setCards([...cards]);
+      
     }
     else if(!cardExists){
       card.save = false;
-      setCards([...cards, card]);
+      setCards([card,...cards]);
     }
     setCardActive({...card}); 
 
@@ -114,18 +116,9 @@ const Home = () => {
         card.save = false;
         setCards([...cards])
       }
-      
-      /* 
-      const cardUnsaved =  cards.find(card => card.id === cardActive.id);
-      if(cardUnsaved && cardActive.code !== cardUnsaved.code){
-        cardUnsaved.save = false;
-        setCards([...cards])
-      }
-      */
     }
   },[code, cardActive])
-
-  console.log(formik)
+  
   return (
     
     <S.ContainerBackground>
