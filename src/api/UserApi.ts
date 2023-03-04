@@ -38,7 +38,6 @@ class UserAPI extends HttpClient
             password
         })
     }
-    // vai ser usado no update.
     async getUser() {
         return await this.instance.get<IGetUserResponse>('/');     
     }
@@ -51,6 +50,9 @@ class UserAPI extends HttpClient
                 "Content-Type": "multipart/form-data",
             }
         })
+    }
+    async patchPassword(password:string){
+        this.instance.patch('/password-update',{password})
     }
 }
 export {UserAPI}
