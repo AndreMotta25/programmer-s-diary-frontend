@@ -70,6 +70,7 @@ const Home = () => {
       
     }
     else if(!cardExists){
+      // aqui o novo id seria atribuido
       card.save = false;
       setCards([card,...cards]);
     }
@@ -125,7 +126,8 @@ const Home = () => {
         <S.ContainerDefault>
           <S.ContainerBlack >
             <Header cards={cards} insertCards={setCards} activeCard={cardActive}/>
-            <CodeMirror code={(cardActive && code) || '' } insertCode={setCode} language={cardActive?.language as LanguageName}/>
+            {cardActive && <CodeMirror code={(cardActive && code) || '' } insertCode={setCode} language={cardActive?.language as LanguageName}/>}
+            {!cardActive && <S.Warning>Para começar, crie um card!</S.Warning>}
           </S.ContainerBlack>
           <Menu deleteCard={deleteCard} research={setSearch} search={search} modalController={modalController} cards={cards} updateCard={updateCard} clearModal={clearModal} activeCard={cardActive}/>
           {<Modal controller={modalController}>

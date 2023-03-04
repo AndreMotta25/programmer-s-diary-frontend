@@ -47,3 +47,14 @@ export const ButtonInherit = styled(ButtonStyled)`
   display: block;
 `
 
+export const Warning = styled.h1`
+  font-family: 'Source Code Pro', monospace;
+  font-size: 2.6rem;
+  font-weight: bold;
+  margin: 0 auto;
+  color: #fff;
+  text-align: center;
+  height: 70%;
+  display: flex;
+  align-items: center;
+`
