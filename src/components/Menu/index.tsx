@@ -26,9 +26,10 @@ interface IMenu {
 
 type Order = {date:string; alphabetical:string;};
 
-const Menu = ({research, search, modalController, cards, updateCard, clearModal, activeCard, deleteCard}:IMenu) => {
+const Menu = ({research, search:a , modalController, cards, updateCard, clearModal, activeCard, deleteCard}:IMenu) => {
   const [order, setOrder] = useState<"date"|"alphabetical">("date");  
   const [active, setActive] = useState(false);
+  const [search, setSearch] = useState('');
 
   const arrange = useCallback((order: "date"|'alphabetical') => {
     if(order === 'alphabetical') {
@@ -59,13 +60,26 @@ const Menu = ({research, search, modalController, cards, updateCard, clearModal,
   }
 
   useEffect(() => {
+    if(search){
+      const foundCards = cards.filter((elem:ICard) => elem.name.includes(search)).length > 0 
+                                                      ?cards.filter((elem:ICard) => elem.name.includes(search))
+                                                      :cards.filter((elem:ICard) => elem.language.includes(search)) ;
+      setCardsOrdered(foundCards);
+    }
+    else           
+      setCardsOrdered([...arrange(order)]);
+  },[search,cards,arrange,order])
+  
+  useEffect(() => {
     setCardsOrdered([...arrange(order)]);
   },[cards, order, arrange])
 
+  
+
+
   return (
     <S.Container>
-        <Search value={search} onChange={({target}) => research(target.value)}/>
-        
+        <Search value={search} onChange={({target}) => setSearch(target.value)}/>       
         <S.Sort>
           <S.SortButton onClick={activeButton}>
             <BsSortAlphaDownAlt/>
