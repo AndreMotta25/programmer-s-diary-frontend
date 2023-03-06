@@ -45,7 +45,7 @@ const Register = () => {
         password:formik.values.password
       })
       setSuccess(true);
-      toast('Usuario criado com sucesso', {status:'success'})
+      toast('Usuario criado com sucesso', {status:'success',autoCloseIn:1500})
     }
     catch(e){
       if(isFormError(e)) {
