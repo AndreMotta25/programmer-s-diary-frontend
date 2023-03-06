@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useEffect, useState} from 'react'
 import { redirect, useLocation, useNavigate } from 'react-router-dom';
-import { userAPI, userAuthenticate } from '../../api';
+import { cardAPI, userAPI, userAuthenticate } from '../../api';
 
 
 interface IUser {
@@ -54,6 +54,7 @@ const UserProvider = ({children}:IProps) => {
     if(token){
         userAPI.setAuthorization(token);
         userAuthenticate.setAuthorization(token);
+        cardAPI.setAuthorization(token);
     }
   }
 
