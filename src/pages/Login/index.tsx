@@ -108,7 +108,7 @@ const Login = () => {
             </S.Form>
             <S.Cadastrar>
               <span>ou</span>
-              <p>criar uma conta</p>
+              <Link to='/registrar'>criar uma conta</Link>
             </S.Cadastrar>
           </S.ContainerElementos>
         </S.ContainerLogin>
