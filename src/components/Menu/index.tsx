@@ -5,6 +5,7 @@ import { ICard } from '../../@types/ICard';
 import Card from '../Card';
 import {BsSortAlphaDownAlt} from 'react-icons/bs'
 import { sort } from '../../utils/sort';
+import Loading from '../Loading';
 
 interface IModalController {
   active: boolean;
@@ -14,19 +15,18 @@ interface IModalController {
 }
 
 interface IMenu {
-  research: React.Dispatch<React.SetStateAction<string>>;
-  search: string;
   modalController: IModalController;
   cards: ICard[],
   updateCard: (card:ICard) => void;
   clearModal: () => void;
   activeCard: ICard | null;
   deleteCard: (id:string) => void;
+  loading: boolean;
 }
 
 type Order = {date:string; alphabetical:string;};
 
-const Menu = ({research, search:a , modalController, cards, updateCard, clearModal, activeCard, deleteCard}:IMenu) => {
+const Menu = ({modalController, cards, updateCard, clearModal, activeCard, deleteCard ,loading}:IMenu) => {
   const [order, setOrder] = useState<"date"|"alphabetical">("date");  
   const [active, setActive] = useState(false);
   const [search, setSearch] = useState('');
@@ -91,10 +91,11 @@ const Menu = ({research, search:a , modalController, cards, updateCard, clearMod
         </S.Sort>
         <S.ContainerCards>
           {
-            cardsOrdered && cardsOrdered.map((card) => (
+            !loading && cardsOrdered && cardsOrdered.map((card) => (
               <Card card={card} key={card.id} updateCard={updateCard} isActive={card.id === activeCard?.id} deleteCard={deleteCard}/>
             ))
           }
+          {loading && <Loading/>}
         </S.ContainerCards>
         <S.Button onClick={activeModal}>Criar Card</S.Button>
     </S.Container>
