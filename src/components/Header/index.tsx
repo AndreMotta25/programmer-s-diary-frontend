@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import * as S from './styles'
 import Profile from '../Profile'
 import useShowElement from '../../hooks/useShowElement'
 import { ICard } from '../../@types/ICard'
+import { cardAPI } from '../../api'
+import useHandlerError from '../../hooks/useHandlerError'
+import { useToastContext } from '../../hooks/useToast'
 
 
 interface IHeader {
@@ -12,7 +15,8 @@ interface IHeader {
 }
 
 const Header = ({activeCard, cards, insertCards}:IHeader) => {
-
+  const {handleError} = useHandlerError();
+  const {toast} = useToastContext();
   const activationHandler = useShowElement();
 
   const updatesCardInRealTime = () => {
@@ -24,12 +28,21 @@ const Header = ({activeCard, cards, insertCards}:IHeader) => {
     }
   }
 
-  const handleClickSave = () => {
-    console.log('salvando');
-    
+  const handleClickSave = async () => {
+    if(activeCard)
+    {
+      try{
+        await cardAPI.putCard(activeCard);
+        toast('Salvo com sucesso',{status:'success',autoCloseIn:1000})
+      }
+      catch(e) {
+        handleError(e);
+      }
+    }
+
+      
     updatesCardInRealTime();
   }
-  console.log(cards)
   return (
     <S.Header active={activationHandler.active}>
       <Profile active={activationHandler.active} activate={activationHandler.setActive}/>

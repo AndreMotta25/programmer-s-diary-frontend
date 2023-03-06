@@ -9,10 +9,11 @@ import TextArea from '../../components/TextArea';
 import Select from '../../components/Select';
 import { useFormik } from 'formik';
 import useShowElement from '../../hooks/useShowElement';
-import {v4} from 'uuid'
 import { createCardSchema } from '../../validations/createCardSchema';
 import { ICard } from '../../@types/ICard';
 import { LanguageName,langNames } from '@uiw/codemirror-extensions-langs';
+import { cardAPI } from '../../api';
+import useHandlerError from '../../hooks/useHandlerError';
 
 
 const langs = langNames.sort().map(lang => {
@@ -25,17 +26,12 @@ const langs = langNames.sort().map(lang => {
 const Home = () => {
   const modalController = useShowElement();
   const [code, setCode] = useState('');
-  const [search, setSearch] = useState('');
-  
-  const [cards, setCards] = useState<ICard[]>([{id:'1',name:'black',  update_date:new Date('03/02/2023'),description:'is simply dummy text of the printing and typesetting industry.',language:'javascript', code:'console.log()'},
-                                               {id:'2',name:'sabbath',update_date:new Date('03/01/2023'),description:'Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',language:'javascript', code:'console.log()'},
-                                               {id:'3',name:'ozzy',   update_date:new Date('03/03/2023'), description:'teste3',language:'javascript', code:'console.log()'},
-                                               {id:'4',name:'pearl jam', update_date:new Date('02/21/2023'),description:'teste4',language:'css', code:'p{}'},
-                                               {id:'5',name:'nirvana',update_date:new Date('02/22/2023') ,description:'teste5',language:'css', code:'p{}'},
-                                               {id:'6',name:'acdc',update_date:new Date('02/03/2023') ,description:'teste6',language:'css', code:'p{}'}]);
-
+  const [cards, setCards] = useState<ICard[]>([]); 
   const [cardActive, setCardActive] = useState<ICard | null>(null) 
   const action = useRef('Criar'); 
+  const [loading, setLoading] = useState(false)
+
+  const {handleError} = useHandlerError();
 
   const clearModal = () => {
       formik.setValues({
@@ -51,9 +47,9 @@ const Home = () => {
       action.current = 'Criar'
   } 
 
-  const mountCard = () => {
+  const mountCard = async () => {
     const card:ICard = {
-      id:formik.values.id || v4() ,
+      id:formik.values.id || '' ,
       name:formik.values.name,
       description:formik.values.description,
       language:formik.values.language,
@@ -70,9 +66,14 @@ const Home = () => {
       
     }
     else if(!cardExists){
-      // aqui o novo id seria atribuido
-      card.save = false;
-      setCards([card,...cards]);
+      try{
+        const id = await cardAPI.postCard({name:card.name, description:card.description, language:card.language, code:card.code})
+        card.id = id;
+        setCards([card,...cards]);
+      }
+      catch(e) {
+        handleError(e);
+      }
     }
     setCardActive({...card}); 
 
@@ -96,6 +97,12 @@ const Home = () => {
   // aqui teria que mexer diretamente na api também
   const deleteCard = (id:string) => {
     deleteInRealTime(id);
+    try{
+      cardAPI.deleteCard(id);
+    }
+    catch(e){
+      handleError(e);
+    }
   }
 
   const formik = useFormik({
@@ -120,6 +127,18 @@ const Home = () => {
     }
   },[code, cardActive])
   
+  useEffect(() => {
+    setLoading(true)    
+    const getCards = async () => {
+      if(cardAPI.hasAuthorization()){
+        const cards = await cardAPI.getCards();
+        setCards(cards);
+        setLoading(false);
+      }
+    }
+    getCards();
+  },[])
+
   return (
     
     <S.ContainerBackground>
@@ -129,7 +148,7 @@ const Home = () => {
             {cardActive && <CodeMirror code={(cardActive && code) || '' } insertCode={setCode} language={cardActive?.language as LanguageName}/>}
             {!cardActive && <S.Warning>Para começar, crie um card!</S.Warning>}
           </S.ContainerBlack>
-          <Menu deleteCard={deleteCard} research={setSearch} search={search} modalController={modalController} cards={cards} updateCard={updateCard} clearModal={clearModal} activeCard={cardActive}/>
+          <Menu loading={loading} deleteCard={deleteCard} modalController={modalController} cards={cards} updateCard={updateCard} clearModal={clearModal} activeCard={cardActive}/>
           {<Modal controller={modalController}>
             <S.ContainerModal>
               <form onSubmit={formik.handleSubmit}>
