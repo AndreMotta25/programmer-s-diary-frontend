@@ -39,7 +39,7 @@ export const Description = styled.p`
 
 export const Extras = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
 `
@@ -50,8 +50,11 @@ export const TypeLanguage = styled.span`
   width: fit-content;
   color: #fff;
   font-family: "Source Code Pro", monospace;
-  flex:4 0 100px ;
+  flex:0 0 50% ;
 
+  @media screen and (max-width:1100px){
+    flex:1 0 90% ;
+  }
   &:hover {
       color: #46FC42;
   }
@@ -62,8 +65,12 @@ export const Actions = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-direction: row-reverse;
-  flex-wrap: wrap;
-  flex:1 0 auto ;
+  
+  @media screen and (max-width:1100px){
+    flex:1 0 auto ;
+  }
+
+  
 `
 
 export const Button = styled.button`
