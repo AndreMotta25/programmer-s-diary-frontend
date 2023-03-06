@@ -13,8 +13,6 @@ export const ContainerBackground = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Esse padding não vai deixar o container filho chegar no topo da pagina, assim o 
-  empurrando para baixo */
   padding: 3rem 0;
 `;
 
@@ -96,14 +94,23 @@ export const Cadastrar = styled.div`
     width: 100%;
     text-align: center;
     font-size: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    
+    & > * {
+      color: #fff;
+      text-decoration:none;
+      font-family: 'Source Code Pro', monospace;
+    } 
 `; 
 
 export const ResetPassword = styled(Link)`
-  position: absolute;
-  bottom: 32%;
-  right: 0;
+  position: relative;
+  bottom: 1.3rem;
+  display: block;
   color: #fff;
   text-decoration: none;
   cursor: pointer;
   font-family: 'Source Code Pro', monospace;
+  text-align: end;
 `
