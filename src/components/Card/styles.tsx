@@ -36,6 +36,13 @@ export const Description = styled.p`
       color: #282828;
     }
 `
+
+export const Extras = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+`
 export const TypeLanguage = styled.span`
   background-color: #282828;
   padding: 0.5rem;
@@ -43,23 +50,20 @@ export const TypeLanguage = styled.span`
   width: fit-content;
   color: #fff;
   font-family: "Source Code Pro", monospace;
+  flex:4 0 100px ;
 
   &:hover {
       color: #46FC42;
   }
 `
 
-export const Extras = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-`
 export const Actions = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: row-reverse;
+  flex-wrap: wrap;
+  flex:1 0 auto ;
 `
 
 export const Button = styled.button`
