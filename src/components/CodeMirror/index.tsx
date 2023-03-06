@@ -27,7 +27,7 @@ const CodeMirror = ({code, insertCode,language}:IProps) => {
         extensions:[loadLanguage(language || 'javascript')!],
         height: '100%',
         value:code,
-        placeholder:"Antes de começar crie um card",
+        placeholder:"Digite seu codigo aqui",
         onChange:onChange,
         basicSetup: {
             autocompletion:true
