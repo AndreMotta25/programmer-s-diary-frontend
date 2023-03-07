@@ -1,5 +1,6 @@
 import axios, { isAxiosError } from 'axios';
 import React, { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom'
 import Loading from '../../components/Loading';
 import * as S from "./styles"
@@ -28,6 +29,9 @@ const ConfirmEmail = () => {
 
   return (
     <S.Container>
+        <Helmet>
+            <title>Diário do Programador - Confirmar Email</title>
+        </Helmet>
         <S.MessageBox>
             <S.Message>
                 {loading && <Loading/>}

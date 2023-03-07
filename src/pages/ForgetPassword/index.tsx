@@ -9,6 +9,7 @@ import * as S from './styles'
 import { useToastContext } from '../../hooks/useToast'
 import {forgetPasswordEmailSchema, forgetPasswordTokenSchema} from '../../validations/forgetPasswordSchema'
 import ContainerGeneric from '../../components/ContainerGeneric'
+import { Helmet } from 'react-helmet'
 
 
 const ForgetPassword = () => {
@@ -70,6 +71,16 @@ const ForgetPassword = () => {
 
   return (
           <ContainerGeneric>
+            <Helmet>
+              <title>Diário do Programador - Esqueçeu a senha</title>
+              <meta name="description" content="Seu repositorio particular. Diário do Programador. Esqueçeu a senha"/>
+              <meta property="og:title" content="Diário do Programador - Home"/>
+              <meta property="og:type" content="website"/>
+              <meta property="og:image" content=""/>
+              <meta property="og:url" content=""/>
+              <meta property="og:description" content="Seu repositorio particular. Diário do Programador. Esqueçeu a senha"/>
+              <meta name="author" content="Diário do Programador"/>
+            </Helmet>
             {!redirect && 
                 <form onSubmit={formikEmail.handleSubmit}>
                     <S.Title>Redefinir Senha</S.Title>

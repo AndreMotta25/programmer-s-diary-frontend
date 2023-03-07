@@ -6,6 +6,7 @@ import useHandlerError from '../../../../hooks/useHandlerError';
 import { useToastContext } from '../../../../hooks/useToast';
 import { Button, ContainerUpdate } from '../../styles';
 import {updatePasswordSchema} from '../../../../validations/updatePasswordSchema'
+import { Helmet } from 'react-helmet';
 
 const Security = () => {
   const {handleError,errors} = useHandlerError();
@@ -36,6 +37,9 @@ const Security = () => {
   
   return (
     <> 
+    <Helmet>
+        <title>Diário do Programador - Segurança</title>
+    </Helmet>
     <form onSubmit={formik.handleSubmit}>
        <ContainerUpdate>
          <Input type='password' id='password' name='password' variant='solid' label='Senha' value={formik.values.password} onChange={formik.handleChange} error={(formik.touched.password && formik.errors.password) || ''}/>

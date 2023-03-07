@@ -8,6 +8,7 @@ import {passwordAPI} from '../../api/'
 import useHandlerError from '../../hooks/useHandlerError';
 import { resetPasswordSchema } from '../../validations/resetPasswordSchema';
 import { useToastContext } from '../../hooks/useToast';
+import { Helmet } from 'react-helmet';
 
 const ResetPassword = () => {
   
@@ -54,6 +55,16 @@ const ResetPassword = () => {
 
   return (
     <ContainerGeneric>
+        <Helmet>
+              <title>Diário do Programador - Resetar Senha</title>
+              <meta name="description" content="Seu repositorio particular. Diário do Programador. Resetar a Senha"/>
+              <meta property="og:title" content="Diário do Programador - Resetar Senha"/>
+              <meta property="og:type" content="website"/>
+              <meta property="og:image" content=""/>
+              <meta property="og:url" content=""/>
+              <meta property="og:description" content="Seu repositorio particular. Diário do Programador.  Resetar Senha"/>
+              <meta name="author" content="Diário do Programador"/>
+            </Helmet>
         <form onSubmit={formik.handleSubmit}>
             <Input onBlurFormik={formik.handleBlur} type='password' onChange={formik.handleChange} value={formik.values.password} label='Senha' id='password' name='password' variant='solid' error={(formik.touched.password && formik.errors.password) || ''}/>
             <Input onBlurFormik={formik.handleBlur} type='password' onChange={formik.handleChange} value={formik.values.same_password} label='Repita a senha' id='same_password' name='same_password'error={(formik.touched.same_password && formik.errors.same_password) || ''} variant='solid'/>

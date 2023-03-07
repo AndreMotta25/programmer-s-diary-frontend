@@ -9,6 +9,7 @@ import {useUserContext} from '../../hooks/useUserContext'
 import { useNavigate } from "react-router-dom";
 import { loginSchema } from "../../validations/loginSchema";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 interface IAppError {
   response: {
@@ -60,6 +61,16 @@ const Login = () => {
   return (
     <>
       <S.ContainerBackground>
+        <Helmet>
+          <title>Diário do Programador - Login</title>
+          <meta name="description" content="Armazene seu codigo aqui. Um diário para um programador. Entre com a sua conta"/>
+          <meta property="og:title" content="Diário do Programador - Login"/>
+          <meta property="og:type" content="website"/>
+          <meta property="og:image" content=""/>
+          <meta property="og:url" content=""/>
+          <meta property="og:description" content="Armazene seu codigo aqui. Um diário para um programador. Entre com a sua conta"/>
+          <meta name="author" content="Diário do Programador"/>
+        </Helmet>
         <S.ContainerLogin>
           <S.ContainerElementos>
             <S.Header>

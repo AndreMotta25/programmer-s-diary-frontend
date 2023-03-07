@@ -14,7 +14,7 @@ import { ICard } from '../../@types/ICard';
 import { LanguageName,langNames } from '@uiw/codemirror-extensions-langs';
 import { cardAPI } from '../../api';
 import useHandlerError from '../../hooks/useHandlerError';
-
+import { Helmet } from 'react-helmet';
 
 const langs = langNames.sort().map(lang => {
   return {
@@ -142,6 +142,16 @@ const Home = () => {
   return (
     
     <S.ContainerBackground>
+        <Helmet>
+          <title>Diário do Programador - Home</title>
+          <meta name="description" content="Seu repositorio particular. Diário do Programador. Home"/>
+          <meta property="og:title" content="Diário do Programador - Home"/>
+          <meta property="og:type" content="website"/>
+          <meta property="og:image" content=""/>
+          <meta property="og:url" content=""/>
+          <meta property="og:description" content="Seu repositorio particular. Diário do Programador. Home"/>
+          <meta name="author" content="Diário do Programador"/>
+        </Helmet>
         <S.ContainerDefault>
           <S.ContainerBlack >
             <Header cards={cards} insertCards={setCards} activeCard={cardActive}/>

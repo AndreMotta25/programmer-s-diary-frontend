@@ -6,6 +6,7 @@ import { useToastContext } from '../../../../hooks/useToast';
 import { useUserContext } from '../../../../hooks/useUserContext';
 import { Button, ContainerUpdate } from '../../styles';
 import useHandlerError from '../../../../hooks/useHandlerError';
+import { Helmet } from 'react-helmet';
 
 const Profile = () => {
   const {user,valid} = useUserContext();
@@ -55,6 +56,10 @@ const Profile = () => {
   },[user])
 
   return (
+    <>
+      <Helmet>
+        <title>Diário do Programador - Perfil</title>
+      </Helmet>
       <form onSubmit={formik.handleSubmit}>
         <ContainerUpdate>
           <Input type='email' variant='solid' label='Email' value={formik.values.email} name='email' id='email' onChange={formik.handleChange} error={(formik.touched.email && formik.errors.email) || ''} />
@@ -62,6 +67,7 @@ const Profile = () => {
         </ContainerUpdate>
         <Button type='submit'>Atualizar usuario</Button>
       </form>
+    </>
   )
 }
 

@@ -10,6 +10,7 @@ import Loading from '../../components/Loading'
 import { Link } from 'react-router-dom'
 import { registerUserSchema } from '../../validations/registerUserSchema'
 import { userAPI } from '../../api'
+import { Helmet } from 'react-helmet'
 
 
 interface IError {
@@ -75,6 +76,16 @@ const Register = () => {
   
   return (
     <S.ContainerBackground>
+        <Helmet>
+          <title>Diário do Programador - Registrar-se</title>
+          <meta name="description" content="Armazene seu codigo aqui. Um diário para um programador. Crie sua conta"/>
+          <meta property="og:title" content="Diário do Programador - Registrar-se"/>
+          <meta property="og:type" content="website"/>
+          <meta property="og:image" content=""/>
+          <meta property="og:url" content=""/>
+          <meta property="og:description" content="Armazene seu codigo aqui. Um diário para um programador. Crie sua conta"/>
+          <meta name="author" content="Diário do Programador"/>
+        </Helmet>
         <S.ContainerRegister>
                 <S.Container>
                 <S.Header>

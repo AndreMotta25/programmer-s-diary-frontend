@@ -1,5 +1,6 @@
 import { isAxiosError } from 'axios'
 import React, { useRef, useState } from 'react'
+import { Helmet } from 'react-helmet'
 import { AiOutlineUpload } from 'react-icons/ai'
 import { userAPI } from '../../../../api'
 import useHandlerError from '../../../../hooks/useHandlerError'
@@ -47,6 +48,9 @@ const Avatar = () => {
 
   return (
     <ContainerUpdate>
+      <Helmet>
+        <title>Diário do Programador - Avatar</title>
+      </Helmet>
         {loading && <p>Carregando</p>}
         {!loading &&
         <form>
