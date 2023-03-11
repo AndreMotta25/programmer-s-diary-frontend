@@ -129,8 +129,9 @@ const Home = () => {
   
   useEffect(() => {
     const getCards = async () => {
-      setLoading(true) 
+       
       if(cardAPI.hasAuthorization()){
+        setLoading(true);
         const cards = await cardAPI.getCards();
         setCards(cards);
         setLoading(false);
