@@ -8,7 +8,7 @@ class PasswordAPI extends HttpClient{
     static apiInstance: PasswordAPI;
 
     private constructor() {
-        super('http://localhost:3333/password');
+        super('https://diario-do-programador.vercel.app/password');
         
     }
 

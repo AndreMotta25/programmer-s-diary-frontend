@@ -13,7 +13,7 @@ class CardApi extends HttpClient {
     static apiInstance: CardApi;
 
     private constructor() {
-        super('http://localhost:3333/card');
+        super('https://diario-do-programador.vercel.app/card');
         
     }
 

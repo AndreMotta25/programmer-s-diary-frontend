@@ -22,7 +22,7 @@ class UserAPI extends HttpClient
     private static apiInstance: UserAPI;
 
     private constructor() {
-        super('http://localhost:3333/user');
+        super('https://diario-do-programador.vercel.app/user');
     }
     
     public static getInstance():UserAPI {

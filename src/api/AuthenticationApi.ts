@@ -17,7 +17,7 @@ class AuthenticationApi extends HttpClient{
     private static apiInstance: AuthenticationApi;
 
     private constructor() {
-        super('http://localhost:3333/sessions')
+        super('https://diario-do-programador.vercel.app/sessions')
     }
     
     public static getInstance():AuthenticationApi {
