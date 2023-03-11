@@ -15,9 +15,7 @@ const Avatar = () => {
   const {user,loading} = useUserContext()  
   const {handleError} = useHandlerError();
   const {toast} = useToastContext();
-  
-  console.log(user)
-     
+       
   const preview = (file:File) => {
     const fileReader = new FileReader();
 
@@ -56,7 +54,7 @@ const Avatar = () => {
         <form>
             <S.InputPhoto type='file' id='avatar' onChange={handleChange} accept='.jpeg,.png,.jpg' />
             <S.PhotoButton htmlFor='avatar'>
-                <img ref={refImage} src={`http://localhost:3333/avatar/${user?.avatar}`} alt='foto'/>
+                <img ref={refImage} src={`https://programmer-s-diary-node-production.up.railway.app/avatar/${user?.avatar}`} alt='foto'/>
                 <AiOutlineUpload className='upload-photo' size="60%"/>
             </S.PhotoButton>
         </form>

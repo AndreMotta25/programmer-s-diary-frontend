@@ -128,8 +128,8 @@ const Home = () => {
   },[code, cardActive])
   
   useEffect(() => {
-    setLoading(true)    
     const getCards = async () => {
+      setLoading(true) 
       if(cardAPI.hasAuthorization()){
         const cards = await cardAPI.getCards();
         setCards(cards);

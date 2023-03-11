@@ -100,6 +100,9 @@ const Menu = ({modalController, cards, updateCard, clearModal, activeCard, delet
                 <Card card={card} key={card.id} updateCard={updateCard} isActive={card.id === activeCard?.id} deleteCard={deleteCard}/>
               ))
             }
+            {
+              !loading && cardsOrdered.length <= 0 && <p>Crie um card</p>
+            }
             {loading && <Loading/>}
           </S.ContainerCards>
           <S.Button onClick={activeModal}>Criar Card</S.Button>
