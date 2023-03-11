@@ -14,7 +14,7 @@ const Profile = ({active, activate}:IProps ) => {
     <>
       <S.ContainerAvatar active={active}>
           <S.ContainerPhoto onClick={() => {activate(active => !active)}}>
-              {user && <img src={`http://localhost:3333/avatar/${user?.avatar}`} alt="" />}
+              {user && <img src={`https://programmer-s-diary-node-production.up.railway.app/avatar/${user?.avatar}`} alt="" />}
           </S.ContainerPhoto>
       <S.ActionsList>
           <S.ActionItem>
