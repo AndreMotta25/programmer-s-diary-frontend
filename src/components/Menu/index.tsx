@@ -6,6 +6,7 @@ import Card from '../Card';
 import {BsSortAlphaDownAlt} from 'react-icons/bs'
 import { sort } from '../../utils/sort';
 import Loading from '../Loading';
+import useShowElement from '../../hooks/useShowElement';
 
 interface IModalController {
   active: boolean;
@@ -30,6 +31,7 @@ const Menu = ({modalController, cards, updateCard, clearModal, activeCard, delet
   const [order, setOrder] = useState<"date"|"alphabetical">("date");  
   const [active, setActive] = useState(false);
   const [search, setSearch] = useState('');
+  const {activeElement, active:isActive} = useShowElement();
 
   const arrange = useCallback((order: "date"|'alphabetical') => {
     if(order === 'alphabetical') {
@@ -78,27 +80,31 @@ const Menu = ({modalController, cards, updateCard, clearModal, activeCard, delet
 
 
   return (
-    <S.Container>
-        <Search value={search} onChange={({target}) => setSearch(target.value)}/>       
-        <S.Sort>
-          <S.SortButton onClick={activeButton}>
-            <BsSortAlphaDownAlt/>
-            <S.SortList active={active}>
-              <S.SortOptions onClick={handleOrder} selected={order === 'alphabetical'}  data-order='alphabetical'>Alfabética</S.SortOptions>
-              <S.SortOptions onClick={handleOrder} selected={order === 'date'} data-order='date'>Data</S.SortOptions>
-            </S.SortList>
-          </S.SortButton>
-        </S.Sort>
-        <S.ContainerCards>
-          {
-            !loading && cardsOrdered && cardsOrdered.map((card) => (
-              <Card card={card} key={card.id} updateCard={updateCard} isActive={card.id === activeCard?.id} deleteCard={deleteCard}/>
-            ))
-          }
-          {loading && <Loading/>}
-        </S.ContainerCards>
-        <S.Button onClick={activeModal}>Criar Card</S.Button>
-    </S.Container>
+    <>
+      <S.ButtonMobileOn onClick={() => {activeElement()}}>Menu</S.ButtonMobileOn>
+      <S.Container isActive={isActive}>
+          <Search value={search} onChange={({target}) => setSearch(target.value)}/>       
+          <S.Sort>
+            <S.SortButton onClick={activeButton}>
+              <BsSortAlphaDownAlt/>
+              <S.SortList active={active}>
+                <S.SortOptions onClick={handleOrder} selected={order === 'alphabetical'}  data-order='alphabetical'>Alfabética</S.SortOptions>
+                <S.SortOptions onClick={handleOrder} selected={order === 'date'} data-order='date'>Data</S.SortOptions>
+              </S.SortList>
+            </S.SortButton>
+            <S.ButtonMobileOff onClick={() => {activeElement()}}>Fechar Menu</S.ButtonMobileOff>
+          </S.Sort>
+          <S.ContainerCards>
+            {
+              !loading && cardsOrdered && cardsOrdered.map((card) => (
+                <Card card={card} key={card.id} updateCard={updateCard} isActive={card.id === activeCard?.id} deleteCard={deleteCard}/>
+              ))
+            }
+            {loading && <Loading/>}
+          </S.ContainerCards>
+          <S.Button onClick={activeModal}>Criar Card</S.Button>
+      </S.Container>
+    </>
   )
 }
 

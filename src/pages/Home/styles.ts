@@ -14,6 +14,7 @@ export const ContainerDefault = styled.main`
   min-height: 80vh;
   background: linear-gradient(to right, #e981d9, #6d22c4);
   display: flex;
+  position: relative;
 `;
 
 export const ContainerBlack = styled.div`

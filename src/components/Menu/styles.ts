@@ -1,6 +1,18 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { ButtonStyled } from '../Button/styles';
 
+interface IMenu {
+  isActive:boolean;
+}
+
+const Slide = keyframes`
+  from {
+    transform: translateX(60px);
+  }
+  to {
+    transform: translateX(initial);
+  }
+`
 export const Container = styled.div`
   background-color: transparent;
   padding:3rem;
@@ -8,6 +20,21 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+
+  @media screen and (max-width:59.375rem){
+    display: ${({isActive}:IMenu) => isActive?'flex':'none' };
+    position: absolute;
+    right: 0;
+    z-index: 9999;
+    background: linear-gradient(to right, #e981d9, #6d22c4);
+    width: 45%;
+    height: 100%;
+    box-shadow: -1rem 0.4rem 0.4rem rgba(0,0,0,50%);
+    animation: ${Slide} 1s ease ;
+  }
+  @media screen and (max-width:37.5rem){
+    width: 90%;
+  }
 `;
 
 export const ContainerCards = styled.section`
@@ -39,11 +66,13 @@ export const Sort = styled.div`
   justify-content: end;
   margin-bottom: 0.5rem;
   align-items: center;
+  gap: 1rem;
+  flex-direction: row-reverse;
 `
 
 export const SortButton = styled.button`
   height: 100%;
-  padding: none;
+  padding: 0.5rem 1rem;
   background-color: #282828;
   border-radius: 0.5rem;
   border: none;
@@ -72,7 +101,6 @@ export const SortList = styled.ul`
   display: ${({active}:ISortList) => (active && 'flex') || 'none'};
   flex-direction: column;
 
-
   &::before {
     content: '';
     display: flex;
@@ -100,4 +128,35 @@ export const SortOptions = styled.li`
   }
 
   color: ${({selected}:ISortOptions) => (selected && '#46FC42') || '#fff'}
+`
+
+export const ButtonMobileOn = styled(ButtonStyled)`
+  position: absolute;
+  right: 0;
+  transform: translate(-33px,80px);
+  font-family: 'Source Code Pro', monospace;
+  color: #fff;
+  background-color: #282828;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  border:2px solid #fff;
+  font-size: 1.3rem;
+  display: none;
+
+  @media screen and (max-width:59.375rem){
+    display: block;
+  }
+`
+export const ButtonMobileOff = styled(ButtonStyled)`
+  font-family: 'Source Code Pro', monospace;
+  color: #fff;
+  background-color: #282828;
+  padding: 0.4rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 1.3rem;
+  display: none;
+
+  @media screen and (max-width:59.375rem){
+    display: block;
+  }
 `

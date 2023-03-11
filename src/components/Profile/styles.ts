@@ -29,7 +29,9 @@ export const ContainerAvatar = styled.div`
   flex-direction: column;
   gap: 2rem;
   
-
+  @media screen and (max-width:37.5rem){
+    z-index: 9998;
+  }
   ${({active}:IProps) =>
    active ?
    css`
@@ -57,7 +59,7 @@ export const ContainerAvatar = styled.div`
         animation: ${SlideAvatarBack} ease-in 0.5s forwards;
     }
    `
-
+  
 }
 
 `;
