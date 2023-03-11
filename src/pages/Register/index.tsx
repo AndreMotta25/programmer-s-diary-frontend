@@ -49,6 +49,7 @@ const Register = () => {
       toast('Usuario criado com sucesso', {status:'success',autoCloseIn:1500})
     }
     catch(e){
+      console.log(e)
       if(isFormError(e)) {
         // Se usarmos classe para resolver isso, vamos ter o dry
          let errors = {} 

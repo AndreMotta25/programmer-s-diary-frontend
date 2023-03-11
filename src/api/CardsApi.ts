@@ -13,7 +13,7 @@ class CardApi extends HttpClient {
     static apiInstance: CardApi;
 
     private constructor() {
-        super('https://diario-do-programador.vercel.app/card');
+        super('https://programmer-s-diary-node-production.up.railway.app/card');
         
     }
 

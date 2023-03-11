@@ -26,8 +26,9 @@ abstract class HttpClient {
     }
 
     private handleRequest = (config: InternalAxiosRequestConfig) => {
-        if(config && config.headers)
+        if(config && config.headers) 
             config.headers.Authorization = 'Bearer '+ this.token
+            
         return config;
     }
 
