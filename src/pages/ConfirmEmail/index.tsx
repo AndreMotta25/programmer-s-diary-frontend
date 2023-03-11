@@ -13,7 +13,7 @@ const ConfirmEmail = () => {
   useEffect(() => {
     const confirmEmail = async () => {
         try {
-            await axios.patch(`http://localhost:3333/confirm-email/${token}`);
+            await axios.patch(`https://programmer-s-diary-node-production.up.railway.app/confirm-email/${token}`);
         }
         catch(e){
             if(isAxiosError(e))
