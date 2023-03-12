@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useEffect, useState} from 'react'
-import { redirect, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { cardAPI, userAPI, userAuthenticate } from '../../api';
 
 
@@ -35,7 +35,6 @@ const UserProvider = ({children}:IProps) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
   const [loading, setLoading] = useState(true);  
-  // const [tokenStatus, setTokenStatus]  = useState(false);
 
   const navigate = useNavigate();
   const {pathname} = useLocation();
@@ -46,11 +45,9 @@ const UserProvider = ({children}:IProps) => {
         setTokenLocalStorage(credentias.token);
         setUser(credentias.user);
         setToken(credentias.token);
-        // setTokenStatus(true);
   } 
 
   const setAuthorizations = async () => {
-    // const tokenValid = await token;
     if(token){
         userAPI.setAuthorization(token);
         userAuthenticate.setAuthorization(token);
@@ -68,7 +65,6 @@ const UserProvider = ({children}:IProps) => {
     finally {
       localStorage.removeItem('token');
       setToken(null);
-      // setTokenStatus(false);
       navigate('/login');
     }
     
@@ -94,7 +90,6 @@ const UserProvider = ({children}:IProps) => {
       if(token){
         if(!await valid()){
           setToken(null);
-          // setTokenStatus(false);
           localStorage.removeItem('token');
           navigate('/login')
         }  
@@ -115,7 +110,7 @@ const UserProvider = ({children}:IProps) => {
       if(tokenValid && token && userAPI.hasAuthorization()) {
           setUser(await userAPI.getUser())
           if(pathname === '/login')
-            redirect('/')
+            navigate('/')
       }  
       setLoading(false);
     }
@@ -123,7 +118,6 @@ const UserProvider = ({children}:IProps) => {
     reloadPage()
   },[pathname])
   
-  console.log(user);
   return (
     <UserContext.Provider value={{
         sign,

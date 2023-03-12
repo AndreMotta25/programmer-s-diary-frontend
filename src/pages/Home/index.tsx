@@ -15,6 +15,7 @@ import { LanguageName,langNames } from '@uiw/codemirror-extensions-langs';
 import { cardAPI } from '../../api';
 import useHandlerError from '../../hooks/useHandlerError';
 import { Helmet } from 'react-helmet';
+import { useUserContext } from '../../hooks/useUserContext';
 
 const langs = langNames.sort().map(lang => {
   return {
@@ -29,7 +30,8 @@ const Home = () => {
   const [cards, setCards] = useState<ICard[]>([]); 
   const [cardActive, setCardActive] = useState<ICard | null>(null) 
   const action = useRef('Criar'); 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const {user} = useUserContext();
 
   const {handleError} = useHandlerError();
 
@@ -129,7 +131,6 @@ const Home = () => {
   
   useEffect(() => {
     const getCards = async () => {
-       
       if(cardAPI.hasAuthorization()){
         setLoading(true);
         const cards = await cardAPI.getCards();
@@ -138,7 +139,7 @@ const Home = () => {
       }
     }
     getCards();
-  },[])
+  },[user])
 
   return (
     
