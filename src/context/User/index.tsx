@@ -39,7 +39,6 @@ const UserProvider = ({children}:IProps) => {
   const navigate = useNavigate();
   const {pathname} = useLocation();
   
-
   const sign = async ({identification, password}:IRequestUser) => {
         const credentias = await userAuthenticate.authenticateUser({identification,password});
         setTokenLocalStorage(credentias.token);
@@ -47,13 +46,13 @@ const UserProvider = ({children}:IProps) => {
         setToken(credentias.token);
   } 
 
-  const setAuthorizations = async () => {
+  const setAuthorizations = useCallback(async () => {
     if(token){
         userAPI.setAuthorization(token);
         userAuthenticate.setAuthorization(token);
         cardAPI.setAuthorization(token);
     }
-  }
+  },[token])
 
   const logout = async () => {
     try 
@@ -86,37 +85,34 @@ const UserProvider = ({children}:IProps) => {
   },[token])
 
   useEffect(() => {
-    const validateToken = async () => {
-      if(token){
-        if(!await valid()){
+    const validateOnChangePage = async () => {
+      if(!await valid()){
           setToken(null);
           localStorage.removeItem('token');
           navigate('/login')
-        }  
-      }           
+      }             
     } 
-    validateToken();
+    validateOnChangePage();
     
-  },[pathname])
+  },[pathname,valid,navigate])
   
   useEffect(() => {
     setAuthorizations();   
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[token])
+  },[token,setAuthorizations])
 
   useEffect(() => {
-    const reloadPage = async () => {
-      const tokenValid = await valid()
-      if(tokenValid && token && userAPI.hasAuthorization()) {
-          setUser(await userAPI.getUser())
-          if(pathname === '/login')
-            navigate('/')
+    const autoLogin = async () => {
+      const tokenValid = await valid();
+      if(tokenValid) {  
+          setUser(await userAPI.getUser());
+          navigate('/');
       }  
       setLoading(false);
     }
     
-    reloadPage()
-  },[pathname])
+    autoLogin()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[valid])
   
   return (
     <UserContext.Provider value={{
