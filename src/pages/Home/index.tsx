@@ -56,7 +56,7 @@ const Home = () => {
       description:formik.values.description,
       language:formik.values.language,
       code:formik.values.code || '',
-      update_date: new Date()
+      update_date: new Date().toISOString()
     }; 
 
     let cardExists = cards.find(elem => elem.id === card.id) ;
@@ -124,6 +124,7 @@ const Home = () => {
       if(card && cardActive.code !== card.code){
         card.code = code;
         card.save = false;
+        card.update_date = new Date().toISOString()
         setCards([...cards])
       }
     }
@@ -140,6 +141,9 @@ const Home = () => {
     }
     getCards();
   },[user])
+
+  console.log(new Date());
+  console.log(cards)
 
   return (
     
