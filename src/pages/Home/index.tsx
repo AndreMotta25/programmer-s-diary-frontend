@@ -15,7 +15,6 @@ import { LanguageName,langNames } from '@uiw/codemirror-extensions-langs';
 import { cardAPI } from '../../api';
 import useHandlerError from '../../hooks/useHandlerError';
 import { Helmet } from 'react-helmet';
-import { useUserContext } from '../../hooks/useUserContext';
 
 const langs = langNames.sort().map(lang => {
   return {
@@ -31,7 +30,6 @@ const Home = () => {
   const [cardActive, setCardActive] = useState<ICard | null>(null) 
   const action = useRef('Criar'); 
   const [loading, setLoading] = useState(false);
-  const {user} = useUserContext();
 
   const {handleError} = useHandlerError();
 
@@ -96,7 +94,6 @@ const Home = () => {
     setCards([...remainingCards])
   }
 
-  // aqui teria que mexer diretamente na api também
   const deleteCard = (id:string) => {
     deleteInRealTime(id);
     try{
@@ -119,15 +116,7 @@ const Home = () => {
     let card = cards.find(card => card.id === id);
     return card;
   },[cards]);
-  
-  /*
-    Quando setCards((cards) => [...cards]) acontecer, o findCard acima será acionado
-    e consequentemente vai acionar novamente o useEffect abaixo, mas um looping 'não 
-    acontece' pq como o cards não foi modificado não há motivos para o effect ficar 
-    re-renderizando. Lembre-se toda vez que um estado fica recebendo o mesmo valor, 
-    o mesmo para de renderizar. 
 
-  */ 
   useEffect(() => {
     if(cardActive){
       cardActive.code = code;
