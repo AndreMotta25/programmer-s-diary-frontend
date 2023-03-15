@@ -29,7 +29,11 @@ interface IProps {
 export const UserContext = createContext({} as IUserContext);
 
 
-
+const setAuthorizations = (token:string) => {
+  userAPI.setAuthorization(token);
+  userAuthenticate.setAuthorization(token);
+  cardAPI.setAuthorization(token);
+}
 
 const UserProvider = ({children}:IProps) => {
   const [user, setUser] = useState<IUser | null>(null);
@@ -44,15 +48,8 @@ const UserProvider = ({children}:IProps) => {
         setTokenLocalStorage(credentias.token);
         setUser(credentias.user);
         setToken(credentias.token);
+        setAuthorizations(credentias.token);
   } 
-
-  const setAuthorizations = useCallback(async () => {
-    if(token){
-        userAPI.setAuthorization(token);
-        userAuthenticate.setAuthorization(token);
-        cardAPI.setAuthorization(token);
-    }
-  },[token])
 
   const logout = async () => {
     try 
@@ -97,8 +94,9 @@ const UserProvider = ({children}:IProps) => {
   },[pathname,valid,navigate])
   
   useEffect(() => {
-    setAuthorizations();   
-  },[token,setAuthorizations])
+    if(token)
+      setAuthorizations(token);   
+  },[token])
 
   useEffect(() => {
     const autoLogin = async () => {

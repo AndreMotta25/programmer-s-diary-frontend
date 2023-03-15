@@ -152,7 +152,7 @@ const Home = () => {
       }
     }
     getCards();
-  },[user])
+  },[])
 
   return (
     
