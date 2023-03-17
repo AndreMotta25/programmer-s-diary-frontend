@@ -14,7 +14,8 @@ interface IUserContext {
     logout: () => Promise<void>,
     user: IUser | null;
     loading: boolean,
-    valid: () => Promise<boolean>
+    valid: () => Promise<boolean>;
+    getUser:(token:string) => Promise<void>
 }
 
 interface IRequestUser {
@@ -35,21 +36,39 @@ const setAuthorizations = (token:string) => {
   cardAPI.setAuthorization(token);
 }
 
+const valid = async () => {
+  const token = localStorage.getItem('token');
+  if(token) {
+    try{
+      await userAuthenticate.validateToken(token);
+      return true;
+    }
+    catch{
+      return false;
+    }        
+  }  
+  return false 
+}
+
 const UserProvider = ({children}:IProps) => {
   const [user, setUser] = useState<IUser | null>(null);
-  const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
   const [loading, setLoading] = useState(true);  
 
   const navigate = useNavigate();
   const {pathname} = useLocation();
   
   const sign = async ({identification, password}:IRequestUser) => {
-        const credentias = await userAuthenticate.authenticateUser({identification,password});
-        setTokenLocalStorage(credentias.token);
-        setUser(credentias.user);
-        setToken(credentias.token);
-        setAuthorizations(credentias.token);
+    const credentias = await userAuthenticate.authenticateUser({identification,password});
+    setTokenLocalStorage(credentias.token);
+    await getUser(credentias.token);   
   } 
+
+  const forceLogout = useCallback( () => {
+    setUser(null);
+    localStorage.removeItem('token');
+    navigate('/login');
+
+  },[navigate]);
 
   const logout = async () => {
     try 
@@ -59,58 +78,41 @@ const UserProvider = ({children}:IProps) => {
     catch {
     }
     finally {
-      localStorage.removeItem('token');
-      setToken(null);
-      navigate('/login');
+      forceLogout();
     }
     
   }
 
   const setTokenLocalStorage = (token:string) => localStorage.setItem('token', token);
   
-  const valid = useCallback(async () => {
-    if(token) {
-      try{
-        await userAuthenticate.validateToken(token);
-        return true;
-      }
-      catch{
-        return false;
-      }        
-    }  
-    return false 
-  },[token])
+  const getUser = async (token:string) =>  {
+    setAuthorizations(token);
+    setUser(await userAPI.getUser());
+  }
 
   useEffect(() => {
     const validateOnChangePage = async () => {
-      if(!await valid()){
-          setToken(null);
-          localStorage.removeItem('token');
-          navigate('/login')
-      }             
+      if(!await valid() && localStorage.getItem('token')){
+        forceLogout();
+      }   
     } 
     validateOnChangePage();
     
-  },[pathname,valid,navigate])
-  
-  useEffect(() => {
-    if(token)
-      setAuthorizations(token);   
-  },[token])
+  },[pathname,navigate,forceLogout])
 
   useEffect(() => {
     const autoLogin = async () => {
       const tokenValid = await valid();
-      if(tokenValid) {  
-          setUser(await userAPI.getUser());
+      const token = localStorage.getItem('token');
+      if(tokenValid && token) {  
+          await getUser(token);
           navigate('/');
       }  
       setLoading(false);
     }
-    
     autoLogin()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[valid])
+  },[])
   
   return (
     <UserContext.Provider value={{
@@ -118,7 +120,8 @@ const UserProvider = ({children}:IProps) => {
         logout,
         user,
         loading,
-        valid
+        valid,
+        getUser
     }}>
       {children}
     </UserContext.Provider>
