@@ -14,7 +14,8 @@ interface IUserContext {
     logout: () => Promise<void>,
     user: IUser | null;
     loading: boolean,
-    valid: () => Promise<boolean>
+    valid: () => Promise<boolean>;
+    getUser:(token:string) => Promise<void>
 }
 
 interface IRequestUser {
@@ -29,31 +30,45 @@ interface IProps {
 export const UserContext = createContext({} as IUserContext);
 
 
+const setAuthorizations = (token:string) => {
+  userAPI.setAuthorization(token);
+  userAuthenticate.setAuthorization(token);
+  cardAPI.setAuthorization(token);
+}
 
+const valid = async () => {
+  const token = localStorage.getItem('token');
+  if(token) {
+    try{
+      await userAuthenticate.validateToken(token);
+      return true;
+    }
+    catch{
+      return false;
+    }        
+  }  
+  return false 
+}
 
 const UserProvider = ({children}:IProps) => {
   const [user, setUser] = useState<IUser | null>(null);
-  const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
   const [loading, setLoading] = useState(true);  
 
   const navigate = useNavigate();
   const {pathname} = useLocation();
   
-
   const sign = async ({identification, password}:IRequestUser) => {
-        const credentias = await userAuthenticate.authenticateUser({identification,password});
-        setTokenLocalStorage(credentias.token);
-        setUser(credentias.user);
-        setToken(credentias.token);
+    const credentias = await userAuthenticate.authenticateUser({identification,password});
+    setTokenLocalStorage(credentias.token);
+    await getUser(credentias.token);   
   } 
 
-  const setAuthorizations = async () => {
-    if(token){
-        userAPI.setAuthorization(token);
-        userAuthenticate.setAuthorization(token);
-        cardAPI.setAuthorization(token);
-    }
-  }
+  const forceLogout = useCallback( () => {
+    setUser(null);
+    localStorage.removeItem('token');
+    navigate('/login');
+
+  },[navigate]);
 
   const logout = async () => {
     try 
@@ -63,60 +78,40 @@ const UserProvider = ({children}:IProps) => {
     catch {
     }
     finally {
-      localStorage.removeItem('token');
-      setToken(null);
-      navigate('/login');
+      forceLogout();
     }
     
   }
 
   const setTokenLocalStorage = (token:string) => localStorage.setItem('token', token);
   
-  const valid = useCallback(async () => {
-    if(token) {
-      try{
-        await userAuthenticate.validateToken(token);
-        return true;
-      }
-      catch{
-        return false;
-      }        
-    }  
-    return false 
-  },[token])
+  const getUser = async (token:string) =>  {
+    setAuthorizations(token);
+    setUser(await userAPI.getUser());
+  }
 
   useEffect(() => {
-    const validateToken = async () => {
-      if(token){
-        if(!await valid()){
-          setToken(null);
-          localStorage.removeItem('token');
-          navigate('/login')
-        }  
-      }           
+    const validateOnChangePage = async () => {
+      if(!await valid() && localStorage.getItem('token')){
+        forceLogout();
+      }   
     } 
-    validateToken();
+    validateOnChangePage();
     
-  },[pathname])
-  
-  useEffect(() => {
-    setAuthorizations();   
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[token])
+  },[pathname,navigate,forceLogout])
 
   useEffect(() => {
-    const reloadPage = async () => {
-      const tokenValid = await valid()
-      if(tokenValid && token && userAPI.hasAuthorization()) {
-          setUser(await userAPI.getUser())
-          if(pathname === '/login')
-            navigate('/')
+    const autoLogin = async () => {
+      setLoading(true);
+      const tokenValid = await valid();
+      const token = localStorage.getItem('token');
+      if(tokenValid && token) {  
+          await getUser(token);
       }  
       setLoading(false);
     }
-    
-    reloadPage()
-  },[pathname])
+    autoLogin()
+  },[])
   
   return (
     <UserContext.Provider value={{
@@ -124,7 +119,8 @@ const UserProvider = ({children}:IProps) => {
         logout,
         user,
         loading,
-        valid
+        valid,
+        getUser
     }}>
       {children}
     </UserContext.Provider>

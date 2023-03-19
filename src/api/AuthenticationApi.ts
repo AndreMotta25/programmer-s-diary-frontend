@@ -17,7 +17,7 @@ class AuthenticationApi extends HttpClient{
     private static apiInstance: AuthenticationApi;
 
     private constructor() {
-        super('https://programmer-s-diary-node-production.up.railway.app/sessions')
+        super(`${process.env.REACT_APP_BASE_URL}/sessions`);
     }
     
     public static getInstance():AuthenticationApi {

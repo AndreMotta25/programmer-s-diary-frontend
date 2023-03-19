@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import Menu from '../../components/Menu'
 import Header  from '../../components/Header'
 import * as S from "./styles";
@@ -113,22 +113,34 @@ const Home = () => {
     validationSchema: createCardSchema
   })
 
+
+  
+  const findCard = useCallback((id:string) => {
+    let card = cards.find(card => card.id === id);
+    return card;
+  },[cards]);
+  
+  /*
+    Quando setCards((cards) => [...cards]) acontecer, o findCard acima será acionado
+    e consequentemente vai acionar novamente o useEffect abaixo, mas um looping 'não 
+    acontece' pq como o cards não foi modificado não há motivos para o effect ficar 
+    re-renderizando. Lembre-se toda vez que um estado fica recebendo o mesmo valor, 
+    o mesmo para de renderizar. 
+
+  */ 
   useEffect(() => {
     if(cardActive){
       cardActive.code = code;
-      
-      let card = cards.find(card => card.id === cardActive.id);
-      
-      console.log(card)
+      let card = findCard(cardActive.id);
       
       if(card && cardActive.code !== card.code){
         card.code = code;
         card.save = false;
         card.update_date = new Date().toISOString()
-        setCards([...cards])
+        setCards((cards) => [...cards])
       }
     }
-  },[code, cardActive])
+  },[code, cardActive, findCard])
   
   useEffect(() => {
     const getCards = async () => {
@@ -140,10 +152,7 @@ const Home = () => {
       }
     }
     getCards();
-  },[user])
-
-  console.log(new Date());
-  console.log(cards)
+  },[])
 
   return (
     

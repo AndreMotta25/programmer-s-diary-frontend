@@ -6,10 +6,11 @@ import Input from "../../components/Input";
 import Loading from "../../components/Loading";
 import { AxiosError } from "axios";
 import {useUserContext} from '../../hooks/useUserContext'
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { loginSchema } from "../../validations/loginSchema";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { Container } from "../Redirect";
 
 interface IAppError {
   response: {
@@ -30,7 +31,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const { sign } = useUserContext();
+  const { sign, user, loading:load } = useUserContext();
 
   const handleSubmit = async () => {
     setLoading((loading) => !loading);
@@ -60,6 +61,9 @@ const Login = () => {
 
   return (
     <>
+      {load &&  <Container><Loading/></Container>}
+      {!load && user && <Navigate to='/'/>}
+      {!load && !user &&
       <S.ContainerBackground>
         <Helmet>
           <title>Diário do Programador - Login</title>
@@ -123,7 +127,7 @@ const Login = () => {
             </S.Cadastrar>
           </S.ContainerElementos>
         </S.ContainerLogin>
-      </S.ContainerBackground>
+      </S.ContainerBackground>}
     </>
   );
 };

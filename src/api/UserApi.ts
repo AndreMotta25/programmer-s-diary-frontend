@@ -1,6 +1,5 @@
 import { HttpClient } from "./shared/HttpClient";
 
-
 interface IPostUser {
     username:string;
     email:string;
@@ -22,7 +21,7 @@ class UserAPI extends HttpClient
     private static apiInstance: UserAPI;
 
     private constructor() {
-        super('https://programmer-s-diary-node-production.up.railway.app/user');
+        super(`${process.env.REACT_APP_BASE_URL}/user`);
     }
     
     public static getInstance():UserAPI {
