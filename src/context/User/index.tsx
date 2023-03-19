@@ -102,16 +102,15 @@ const UserProvider = ({children}:IProps) => {
 
   useEffect(() => {
     const autoLogin = async () => {
+      setLoading(true);
       const tokenValid = await valid();
       const token = localStorage.getItem('token');
       if(tokenValid && token) {  
           await getUser(token);
-          navigate('/');
       }  
       setLoading(false);
     }
     autoLogin()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   
   return (
