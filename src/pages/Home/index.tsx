@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import Menu from '../../components/Menu'
 import Header  from '../../components/Header'
 import * as S from "./styles";
@@ -15,7 +15,6 @@ import { LanguageName,langNames } from '@uiw/codemirror-extensions-langs';
 import { cardAPI } from '../../api';
 import useHandlerError from '../../hooks/useHandlerError';
 import { Helmet } from 'react-helmet';
-import { useUserContext } from '../../hooks/useUserContext';
 
 const langs = langNames.sort().map(lang => {
   return {
@@ -31,7 +30,6 @@ const Home = () => {
   const [cardActive, setCardActive] = useState<ICard | null>(null) 
   const action = useRef('Criar'); 
   const [loading, setLoading] = useState(false);
-  const {user} = useUserContext();
 
   const {handleError} = useHandlerError();
 
@@ -96,7 +94,6 @@ const Home = () => {
     setCards([...remainingCards])
   }
 
-  // aqui teria que mexer diretamente na api também
   const deleteCard = (id:string) => {
     deleteInRealTime(id);
     try{
@@ -113,22 +110,26 @@ const Home = () => {
     validationSchema: createCardSchema
   })
 
+
+  
+  const findCard = useCallback((id:string) => {
+    let card = cards.find(card => card.id === id);
+    return card;
+  },[cards]);
+
   useEffect(() => {
     if(cardActive){
       cardActive.code = code;
-      
-      let card = cards.find(card => card.id === cardActive.id);
-      
-      console.log(card)
+      let card = findCard(cardActive.id);
       
       if(card && cardActive.code !== card.code){
         card.code = code;
         card.save = false;
         card.update_date = new Date().toISOString()
-        setCards([...cards])
+        setCards((cards) => [...cards])
       }
     }
-  },[code, cardActive])
+  },[code, cardActive, findCard])
   
   useEffect(() => {
     const getCards = async () => {
@@ -140,10 +141,7 @@ const Home = () => {
       }
     }
     getCards();
-  },[user])
-
-  console.log(new Date());
-  console.log(cards)
+  },[])
 
   return (
     

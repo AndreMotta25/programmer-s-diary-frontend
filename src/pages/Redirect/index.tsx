@@ -1,8 +1,8 @@
-import React, { ReactNode, useEffect } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import Loading from '../../components/Loading';
 import {useUserContext} from '../../hooks/useUserContext';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 interface IProps {
     children: ReactNode
@@ -18,22 +18,13 @@ export const Container = styled.div`
 `;
 
 const Redirect = ({children}:IProps) => {
-  const {user, loading} = useUserContext();  
-  const navigate = useNavigate();
+  const {user,loading} = useUserContext();  
 
-  useEffect(() => {
-    if(!loading && !user){
-      navigate('/login');
-    }
-      
-  },[loading])
-  
   return (
     <>
-
         {loading && <Container><Loading/></Container>}
-        <div>{!loading && user && children}</div>
-        {/* <div>{!loading && !user && <p>Faça login para ver essa pagina</p>}</div> */}
+        {!loading && !user && <Navigate to='/login'/>}
+        {!loading && user && children}
     </>
   )
 }

@@ -1,5 +1,4 @@
-import React,{ useState, useEffect} from 'react'
-import { Helmet } from 'react-helmet';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
 import Avatar from './components/Avatar';
@@ -7,13 +6,14 @@ import Profile from './components/Profile';
 import Security from './components/Security';
 import * as S from './styles'
 
-const Update = () => {
+const Update = () => {  
+
   const styles: React.CSSProperties = {
     backgroundColor:'#282828',
     color: '#fff'
   }
-
   return (
+    <>
     <S.ContainerBackground>
       <S.Container>
         <nav>
@@ -33,13 +33,13 @@ const Update = () => {
           </S.List>
         </nav>
         <Routes>
-          <Route path='' element={<Profile/>}/>
-          
+          <Route path='/' element={<Profile/>}/>
           <Route path='seguranca' element={<Security/>}/>
           <Route path='avatar' element={<Avatar/>}/>
         </Routes> 
       </S.Container>
     </S.ContainerBackground>
+    </>
   )
 }
 

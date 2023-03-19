@@ -13,7 +13,7 @@ class CardApi extends HttpClient {
     static apiInstance: CardApi;
 
     private constructor() {
-        super('https://programmer-s-diary-node-production.up.railway.app/card');
+        super(`${process.env.REACT_APP_BASE_URL}/card`);
         
     }
 
