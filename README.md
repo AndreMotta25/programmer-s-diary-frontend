@@ -5,5 +5,14 @@ O Diário do Programador surgiu de uma necessidade pessoal: eu frequentemente es
 A grande vantagem do Diário do Programador é a sua simplicidade: não é necessário criar arquivos para armazenar os códigos, tornando a busca mais fácil e rápida.
 
 
-
-
+# Bibliotecas Usadas
+* @codemirror
+* axios
+* formik
+* react-router-dom
+* react-helmet
+* react-icons
+* styled-components
+* typescript
+* uuid
+* yup
